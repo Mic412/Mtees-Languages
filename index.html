@@ -2,13 +2,6 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-
-<!-- ═══ SECURITY META TAGS ═══ -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https:; frame-src 'self' blob:; object-src 'none';">
-
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d1117">
 <!-- manifest injected inline via JS below -->
@@ -538,13 +531,6 @@ const GAMES = {
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-
-<!-- ═══ SECURITY META TAGS ═══ -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https:; frame-src 'self' blob:; object-src 'none';">
-
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sprachstufen · German A1–C2 Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1963,176 +1949,6 @@ window.addEventListener('load',function(){
   refreshHome();
 });
 <\/script>
-
-<!-- ☕ Buy Me a Coffee -->
-<style>
-.bmac-wrap{position:fixed;bottom:22px;right:18px;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bmac-wrap a{
-  display:flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#FFDD00,#FFB800);
-  color:#111;font-weight:700;font-size:14px;
-  font-family:sans-serif;
-  padding:10px 16px;border-radius:50px;
-  text-decoration:none;white-space:nowrap;
-  box-shadow:0 4px 18px rgba(255,200,0,0.5);
-  transition:transform .15s,box-shadow .15s;
-}
-.bmac-wrap a:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(255,200,0,0.65);}
-.bmac-sub{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(255,220,80,0.65);text-transform:uppercase;}
-</style>
-<div class="bmac-wrap">
-  <a href="https://buymeacoffee.com/Mteeslanguages" target="_blank" rel="noopener">☕ Buy me a coffee</a>
-  <span class="bmac-sub">Support this app</span>
-</div>
-
-<!-- 🔒 Paywall Modal -->
-<style>
-.pw-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,22,0.94);backdrop-filter:blur(14px);z-index:99000;align-items:center;justify-content:center;}
-.pw-overlay.show{display:flex;}
-.pw-box{background:linear-gradient(145deg,#0f1423,#1a2035);border:1px solid rgba(245,200,66,0.3);border-radius:20px;padding:34px 26px 28px;max-width:330px;width:92%;text-align:center;box-shadow:0 0 60px rgba(245,200,66,0.12);}
-.pw-icon{font-size:44px;margin-bottom:10px;}
-.pw-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#f5c842;margin-bottom:6px;}
-.pw-desc{font-family:'DM Mono',monospace;font-size:11px;color:#8a8070;line-height:1.7;margin-bottom:18px;}
-.pw-price{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:#fff;margin-bottom:4px;}
-.pw-price span{font-size:18px;color:#8a8070;}
-.pw-feats{list-style:none;margin:0 0 22px;padding:0;text-align:left;}
-.pw-feats li{font-family:'DM Mono',monospace;font-size:11px;color:#c0b898;padding:5px 0;border-bottom:1px solid rgba(245,200,66,0.07);display:flex;gap:8px;}
-.pw-paybtn{display:block;width:100%;background:linear-gradient(135deg,#f5c842,#e0a820);color:#000;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 20px rgba(245,200,66,0.3);transition:transform .15s;}
-.pw-paybtn:hover{transform:scale(1.03);}
-.pw-close{background:none;border:1px solid rgba(245,200,66,0.2);color:#8a8070;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;padding:8px 20px;border-radius:20px;cursor:pointer;text-transform:uppercase;}
-.pw-close:hover{border-color:rgba(245,200,66,0.4);color:#f5c842;}
-.pw-paid{font-family:'DM Mono',monospace;font-size:9px;color:rgba(245,200,66,0.4);margin-top:12px;line-height:1.7;}
-.pw-paid button{background:none;border:none;color:rgba(245,200,66,0.5);font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;text-decoration:underline;margin-top:5px;display:block;margin:5px auto 0;}
-</style>
-
-<div class="pw-overlay" id="pw-overlay">
-  <div class="pw-box">
-    <div class="pw-icon">🔒</div>
-    <div class="pw-title">Premium Levels</div>
-    <div class="pw-desc">Unlock B1 → C2 — intermediate to mastery level German</div>
-    <div class="pw-price">$7.00 <span>once</span></div>
-    <ul class="pw-feats">
-      <li>✦ B1 — Intermediate conversations</li>
-      <li>✦ B2 — Advanced fluency</li>
-      <li>✦ C1 — Professional mastery</li>
-      <li>✦ C2 — Native-level precision</li>
-      <li>✦ Lifetime access, no subscription</li>
-    </ul>
-    <a class="pw-paybtn" href="https://www.paypal.me/MichaelAsante438/7" target="_blank" rel="noopener">
-      💳 Unlock with PayPal — $7.00
-    </a>
-    <button class="pw-close" onclick="document.getElementById('pw-overlay').classList.remove('show')">Maybe later</button>
-    <div class="pw-paid">
-      Already paid?
-      <button onclick="pwUnlock()">✓ I've paid — unlock now</button>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  let unlocked = sessionStorage.getItem('pw_unlocked') === '1';
-
-  window.pwUnlock = function(){
-    unlocked = true;
-    sessionStorage.setItem('pw_unlocked','1');
-    document.getElementById('pw-overlay').classList.remove('show');
-    const t = document.createElement('div');
-    t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f1a0f;border:1px solid rgba(80,200,120,0.4);color:#50c878;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;padding:11px 22px;border-radius:20px;z-index:999999;';
-    t.textContent='✓ Premium unlocked — B1 to C2 accessible!';
-    document.body.appendChild(t);
-    setTimeout(()=>t.remove(),4000);
-  };
-
-  // Hook into the existing switchTo function AFTER the page loads
-  // so it doesn't break the game initialisation
-  window.addEventListener('load', function(){
-    const orig = window.switchTo;
-    if(typeof orig !== 'function') return;
-    window.switchTo = function(id){
-      // We don't lock by tab id since tabs are g1/g2/g3 not levels
-      // Paywall is triggered by CEFR level buttons inside the iframes
-      orig(id);
-    };
-
-    // Listen for messages from iframes requesting paywall
-    window.addEventListener('message', function(e){
-      if(e.data && e.data.type === 'show-paywall' && !unlocked){
-        document.getElementById('pw-overlay').classList.add('show');
-      }
-      if(e.data && e.data.type === 'check-unlock'){
-        // respond to iframe
-        if(e.source) e.source.postMessage({type:'unlock-status', unlocked: unlocked}, '*');
-      }
-    });
-  });
-})();
-</script>
-
-
-<!-- ═══ SECURITY SCRIPT ═══ -->
-<script>
-(function(){
-  'use strict';
-
-  // 1. CLICKJACKING PROTECTION — bust out if embedded in foreign iframe
-  if (window.top !== window.self) {
-    try {
-      if (window.top.location.hostname !== window.location.hostname) {
-        window.top.location = window.location;
-      }
-    } catch(e) {
-      document.documentElement.style.display = 'none';
-    }
-  }
-
-  // 2. PAYWALL BRUTE-FORCE PROTECTION
-  let unlockAttempts = parseInt(sessionStorage.getItem('_ua') || '0');
-  const MAX_ATTEMPTS = 5;
-  const _origUnlock = window.pwUnlock;
-  window.pwUnlock = function() {
-    unlockAttempts++;
-    sessionStorage.setItem('_ua', unlockAttempts);
-    if (unlockAttempts > MAX_ATTEMPTS) {
-      const box = document.querySelector('.pw-box');
-      if (box) box.innerHTML = '<div style="padding:30px;font-family:'DM Mono',monospace;color:#f5c842;font-size:12px;text-align:center;line-height:2.2;">⚠️ Too many attempts.<br>Please complete your PayPal payment<br>and refresh the page.<br><br><a href="https://www.paypal.me/MichaelAsante438/7" target="_blank" style="color:#f5c842;text-decoration:underline;">→ Pay via PayPal — $7.00</a></div>';
-      return;
-    }
-    if (typeof _origUnlock === 'function') _origUnlock();
-  };
-
-  // 3. DEVTOOLS CONSOLE WARNING (no keyboard blocking — game needs keys)
-  console.log('%c🔒 Protected App', 'color:red;font-size:28px;font-weight:bold;');
-  console.log('%cThis application is protected. Tampering may violate applicable law.', 'color:#f5c842;font-size:13px;');
-
-  // 4. XSS SANITIZER — available globally for any dynamic content
-  window._sanitize = function(str) {
-    if (typeof str !== 'string') return '';
-    const d = document.createElement('div');
-    d.appendChild(document.createTextNode(str));
-    return d.innerHTML;
-  };
-
-  // 5. SAFE POSTMESSAGE VALIDATION — only trust same origin or blob
-  window.addEventListener('message', function(e) {
-    const trusted = [window.location.origin, 'null', ''];
-    if (e.origin && !trusted.includes(e.origin) && !e.origin.startsWith('blob:')) {
-      return; // silently ignore untrusted origins
-    }
-  }, true);
-
-  // 6. INTEGRITY CHECK on load
-  window.addEventListener('load', function() {
-    ['pw-overlay','bmac-wrap'].forEach(function(id) {
-      if (!document.getElementById(id) && !document.querySelector('.' + id)) {
-        console.warn('Security: element missing — possible DOM tampering.');
-      }
-    });
-  });
-
-})();
-</script>
-
 </body>
 </html>
 `,
@@ -2140,13 +1956,6 @@ window.addEventListener('load',function(){
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<!-- ═══ SECURITY META TAGS ═══ -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https:; frame-src 'self' blob:; object-src 'none';">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -6304,6 +6113,7 @@ switchTab('noun');
 <\/script>
 
 <!-- PWA: Offline bar -->
+<div id="offline-bar">⚡ Offline mode — all features still work</div>
 
 <!-- PWA: Install banner -->
 <div id="pwa-banner" class="hidden">
@@ -6457,6 +6267,10 @@ dismissBtn.addEventListener('click', () => {
   deferredPrompt = null;
 });
 
+window.addEventListener('appinstalled', () => {
+  banner.classList.add('hidden');
+  deferredPrompt = null;
+});
 
 // ============================================================
 // OFFLINE / ONLINE DETECTION
@@ -6471,74 +6285,10 @@ function updateOnlineStatus() {
   }
 }
 
-  });
-})();
-</script>
-
-
-<!-- ═══ SECURITY SCRIPT ═══ -->
-<script>
-(function(){
-  'use strict';
-
-  // 1. CLICKJACKING PROTECTION — bust out if embedded in foreign iframe
-  if (window.top !== window.self) {
-    try {
-      if (window.top.location.hostname !== window.location.hostname) {
-        window.top.location = window.location;
-      }
-    } catch(e) {
-      document.documentElement.style.display = 'none';
-    }
-  }
-
-  // 2. PAYWALL BRUTE-FORCE PROTECTION
-  let unlockAttempts = parseInt(sessionStorage.getItem('_ua') || '0');
-  const MAX_ATTEMPTS = 5;
-  const _origUnlock = window.pwUnlock;
-  window.pwUnlock = function() {
-    unlockAttempts++;
-    sessionStorage.setItem('_ua', unlockAttempts);
-    if (unlockAttempts > MAX_ATTEMPTS) {
-      const box = document.querySelector('.pw-box');
-      if (box) box.innerHTML = '<div style="padding:30px;font-family:'DM Mono',monospace;color:#f5c842;font-size:12px;text-align:center;line-height:2.2;">⚠️ Too many attempts.<br>Please complete your PayPal payment<br>and refresh the page.<br><br><a href="https://www.paypal.me/MichaelAsante438/7" target="_blank" style="color:#f5c842;text-decoration:underline;">→ Pay via PayPal — $7.00</a></div>';
-      return;
-    }
-    if (typeof _origUnlock === 'function') _origUnlock();
-  };
-
-  // 3. DEVTOOLS CONSOLE WARNING (no keyboard blocking — game needs keys)
-  console.log('%c🔒 Protected App', 'color:red;font-size:28px;font-weight:bold;');
-  console.log('%cThis application is protected. Tampering may violate applicable law.', 'color:#f5c842;font-size:13px;');
-
-  // 4. XSS SANITIZER — available globally for any dynamic content
-  window._sanitize = function(str) {
-    if (typeof str !== 'string') return '';
-    const d = document.createElement('div');
-    d.appendChild(document.createTextNode(str));
-    return d.innerHTML;
-  };
-
-  // 5. SAFE POSTMESSAGE VALIDATION — only trust same origin or blob
-  window.addEventListener('message', function(e) {
-    const trusted = [window.location.origin, 'null', ''];
-    if (e.origin && !trusted.includes(e.origin) && !e.origin.startsWith('blob:')) {
-      return; // silently ignore untrusted origins
-    }
-  }, true);
-
-  // 6. INTEGRITY CHECK on load
-  window.addEventListener('load', function() {
-    ['pw-overlay','bmac-wrap'].forEach(function(id) {
-      if (!document.getElementById(id) && !document.querySelector('.' + id)) {
-        console.warn('Security: element missing — possible DOM tampering.');
-      }
-    });
-  });
-
-})();
-</script>
-
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+<\/script>
 </body>
 </html>
 `,
@@ -6546,13 +6296,6 @@ function updateOnlineStatus() {
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-
-<!-- ═══ SECURITY META TAGS ═══ -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-XSS-Protection" content="1; mode=block">
-<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https:; frame-src 'self' blob:; object-src 'none';">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>DeutschMeister — Sätze bauen</title>
 <meta name="description" content="Lerne Deutsch von A1 bis C2 mit täglichen Gesprächen und CEFR-Satzprogression">
@@ -7093,6 +6836,7 @@ body {
 </head>
 <body>
 
+<div id="offline-bar">⚡ OFFLINE — App funktioniert weiterhin!</div>
 
 <button class="hamburger" onclick="toggleSidebar()">☰</button>
 <div class="overlay" id="ov" onclick="toggleSidebar()"></div>
@@ -8525,6 +8269,48 @@ function renderGrammatik(){
 // ═══════════════════════════════════════════════════
 // OFFLINE / PWA / INSTALL
 // ═══════════════════════════════════════════════════
+window.addEventListener('online',()=>document.getElementById('offline-bar').style.display='none');
+window.addEventListener('offline',()=>document.getElementById('offline-bar').style.display='block');
+
+// ── PWA Manifest (injected dynamically) ──
+const manifest = {
+  name:'DeutschMeister',
+  short_name:'Deutsch',
+  description:'Learn German A1–C2 with sentence building, CEFR progression and daily conversations',
+  start_url:'.',
+  display:'standalone',
+  background_color:'#0a0a0f',
+  theme_color:'#d4a843',
+  orientation:'portrait',
+  icons:[
+    {src:generateIcon(),sizes:'192x192',type:'image/png'},
+    {src:generateIcon(),sizes:'512x512',type:'image/png'}
+  ]
+};
+
+function generateIcon(){
+  const c=document.createElement('canvas');
+  c.width=512;c.height=512;
+  const ctx=c.getContext('2d');
+  // Background
+  const g=ctx.createLinearGradient(0,0,512,512);
+  g.addColorStop(0,'#0a0a0f');g.addColorStop(1,'#1a1a25');
+  ctx.fillStyle=g;ctx.fillRect(0,0,512,512);
+  // Gold circle
+  ctx.strokeStyle='#d4a843';ctx.lineWidth=18;
+  ctx.beginPath();ctx.arc(256,256,220,0,Math.PI*2);ctx.stroke();
+  // "DE" text
+  ctx.fillStyle='#d4a843';
+  ctx.font='bold 200px serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('DE',256,240);
+  ctx.font='bold 56px sans-serif';
+  ctx.fillStyle='#8a8899';
+  ctx.fillText('MEISTER',256,360);
+  return c.toDataURL('image/png');
+}
+
+const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
 const mUrl=URL.createObjectURL(mBlob);
 const mLink=document.createElement('link');
 mLink.rel='manifest';mLink.href=mUrl;
@@ -8591,176 +8377,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   loadSatz();
 });
 <\/script>
-
-<!-- ☕ Buy Me a Coffee -->
-<style>
-.bmac-wrap{position:fixed;bottom:22px;right:18px;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bmac-wrap a{
-  display:flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#FFDD00,#FFB800);
-  color:#111;font-weight:700;font-size:14px;
-  font-family:sans-serif;
-  padding:10px 16px;border-radius:50px;
-  text-decoration:none;white-space:nowrap;
-  box-shadow:0 4px 18px rgba(255,200,0,0.5);
-  transition:transform .15s,box-shadow .15s;
-}
-.bmac-wrap a:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(255,200,0,0.65);}
-.bmac-sub{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(255,220,80,0.65);text-transform:uppercase;}
-</style>
-<div class="bmac-wrap">
-  <a href="https://buymeacoffee.com/Mteeslanguages" target="_blank" rel="noopener">☕ Buy me a coffee</a>
-  <span class="bmac-sub">Support this app</span>
-</div>
-
-<!-- 🔒 Paywall Modal -->
-<style>
-.pw-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,22,0.94);backdrop-filter:blur(14px);z-index:99000;align-items:center;justify-content:center;}
-.pw-overlay.show{display:flex;}
-.pw-box{background:linear-gradient(145deg,#0f1423,#1a2035);border:1px solid rgba(245,200,66,0.3);border-radius:20px;padding:34px 26px 28px;max-width:330px;width:92%;text-align:center;box-shadow:0 0 60px rgba(245,200,66,0.12);}
-.pw-icon{font-size:44px;margin-bottom:10px;}
-.pw-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#f5c842;margin-bottom:6px;}
-.pw-desc{font-family:'DM Mono',monospace;font-size:11px;color:#8a8070;line-height:1.7;margin-bottom:18px;}
-.pw-price{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:#fff;margin-bottom:4px;}
-.pw-price span{font-size:18px;color:#8a8070;}
-.pw-feats{list-style:none;margin:0 0 22px;padding:0;text-align:left;}
-.pw-feats li{font-family:'DM Mono',monospace;font-size:11px;color:#c0b898;padding:5px 0;border-bottom:1px solid rgba(245,200,66,0.07);display:flex;gap:8px;}
-.pw-paybtn{display:block;width:100%;background:linear-gradient(135deg,#f5c842,#e0a820);color:#000;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 20px rgba(245,200,66,0.3);transition:transform .15s;}
-.pw-paybtn:hover{transform:scale(1.03);}
-.pw-close{background:none;border:1px solid rgba(245,200,66,0.2);color:#8a8070;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;padding:8px 20px;border-radius:20px;cursor:pointer;text-transform:uppercase;}
-.pw-close:hover{border-color:rgba(245,200,66,0.4);color:#f5c842;}
-.pw-paid{font-family:'DM Mono',monospace;font-size:9px;color:rgba(245,200,66,0.4);margin-top:12px;line-height:1.7;}
-.pw-paid button{background:none;border:none;color:rgba(245,200,66,0.5);font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;text-decoration:underline;margin-top:5px;display:block;margin:5px auto 0;}
-</style>
-
-<div class="pw-overlay" id="pw-overlay">
-  <div class="pw-box">
-    <div class="pw-icon">🔒</div>
-    <div class="pw-title">Premium Levels</div>
-    <div class="pw-desc">Unlock B1 → C2 — intermediate to mastery level German</div>
-    <div class="pw-price">$7.00 <span>once</span></div>
-    <ul class="pw-feats">
-      <li>✦ B1 — Intermediate conversations</li>
-      <li>✦ B2 — Advanced fluency</li>
-      <li>✦ C1 — Professional mastery</li>
-      <li>✦ C2 — Native-level precision</li>
-      <li>✦ Lifetime access, no subscription</li>
-    </ul>
-    <a class="pw-paybtn" href="https://www.paypal.me/MichaelAsante438/7" target="_blank" rel="noopener">
-      💳 Unlock with PayPal — $7.00
-    </a>
-    <button class="pw-close" onclick="document.getElementById('pw-overlay').classList.remove('show')">Maybe later</button>
-    <div class="pw-paid">
-      Already paid?
-      <button onclick="pwUnlock()">✓ I've paid — unlock now</button>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  let unlocked = sessionStorage.getItem('pw_unlocked') === '1';
-
-  window.pwUnlock = function(){
-    unlocked = true;
-    sessionStorage.setItem('pw_unlocked','1');
-    document.getElementById('pw-overlay').classList.remove('show');
-    const t = document.createElement('div');
-    t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f1a0f;border:1px solid rgba(80,200,120,0.4);color:#50c878;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;padding:11px 22px;border-radius:20px;z-index:999999;';
-    t.textContent='✓ Premium unlocked — B1 to C2 accessible!';
-    document.body.appendChild(t);
-    setTimeout(()=>t.remove(),4000);
-  };
-
-  // Hook into the existing switchTo function AFTER the page loads
-  // so it doesn't break the game initialisation
-  window.addEventListener('load', function(){
-    const orig = window.switchTo;
-    if(typeof orig !== 'function') return;
-    window.switchTo = function(id){
-      // We don't lock by tab id since tabs are g1/g2/g3 not levels
-      // Paywall is triggered by CEFR level buttons inside the iframes
-      orig(id);
-    };
-
-    // Listen for messages from iframes requesting paywall
-    window.addEventListener('message', function(e){
-      if(e.data && e.data.type === 'show-paywall' && !unlocked){
-        document.getElementById('pw-overlay').classList.add('show');
-      }
-      if(e.data && e.data.type === 'check-unlock'){
-        // respond to iframe
-        if(e.source) e.source.postMessage({type:'unlock-status', unlocked: unlocked}, '*');
-      }
-    });
-  });
-})();
-</script>
-
-
-<!-- ═══ SECURITY SCRIPT ═══ -->
-<script>
-(function(){
-  'use strict';
-
-  // 1. CLICKJACKING PROTECTION — bust out if embedded in foreign iframe
-  if (window.top !== window.self) {
-    try {
-      if (window.top.location.hostname !== window.location.hostname) {
-        window.top.location = window.location;
-      }
-    } catch(e) {
-      document.documentElement.style.display = 'none';
-    }
-  }
-
-  // 2. PAYWALL BRUTE-FORCE PROTECTION
-  let unlockAttempts = parseInt(sessionStorage.getItem('_ua') || '0');
-  const MAX_ATTEMPTS = 5;
-  const _origUnlock = window.pwUnlock;
-  window.pwUnlock = function() {
-    unlockAttempts++;
-    sessionStorage.setItem('_ua', unlockAttempts);
-    if (unlockAttempts > MAX_ATTEMPTS) {
-      const box = document.querySelector('.pw-box');
-      if (box) box.innerHTML = '<div style="padding:30px;font-family:'DM Mono',monospace;color:#f5c842;font-size:12px;text-align:center;line-height:2.2;">⚠️ Too many attempts.<br>Please complete your PayPal payment<br>and refresh the page.<br><br><a href="https://www.paypal.me/MichaelAsante438/7" target="_blank" style="color:#f5c842;text-decoration:underline;">→ Pay via PayPal — $7.00</a></div>';
-      return;
-    }
-    if (typeof _origUnlock === 'function') _origUnlock();
-  };
-
-  // 3. DEVTOOLS CONSOLE WARNING (no keyboard blocking — game needs keys)
-  console.log('%c🔒 Protected App', 'color:red;font-size:28px;font-weight:bold;');
-  console.log('%cThis application is protected. Tampering may violate applicable law.', 'color:#f5c842;font-size:13px;');
-
-  // 4. XSS SANITIZER — available globally for any dynamic content
-  window._sanitize = function(str) {
-    if (typeof str !== 'string') return '';
-    const d = document.createElement('div');
-    d.appendChild(document.createTextNode(str));
-    return d.innerHTML;
-  };
-
-  // 5. SAFE POSTMESSAGE VALIDATION — only trust same origin or blob
-  window.addEventListener('message', function(e) {
-    const trusted = [window.location.origin, 'null', ''];
-    if (e.origin && !trusted.includes(e.origin) && !e.origin.startsWith('blob:')) {
-      return; // silently ignore untrusted origins
-    }
-  }, true);
-
-  // 6. INTEGRITY CHECK on load
-  window.addEventListener('load', function() {
-    ['pw-overlay','bmac-wrap'].forEach(function(id) {
-      if (!document.getElementById(id) && !document.querySelector('.' + id)) {
-        console.warn('Security: element missing — possible DOM tampering.');
-      }
-    });
-  });
-
-})();
-</script>
-
 </body>
 </html>
 `
@@ -8827,8 +8443,7 @@ function switchTo(id) {
   document.head.appendChild(l);
 })();
 
-/* Service Worker removed — online only */
-
+/* online only */
 /* ── PWA Install ── */
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', e => {
@@ -8844,196 +8459,27 @@ function installApp() {
     document.getElementById('install-btn').classList.remove('show');
   });
 }
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-btn').classList.remove('show');
+  document.getElementById('offline-pill').classList.add('show');
+});
 
 /* PWA Manifest loaded inline via blob */
 
 /* ── Init ── */
 window.addEventListener('DOMContentLoaded', () => {
-
-  // Unregister any existing service workers — app is online only
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      regs.forEach(reg => reg.unregister());
-    });
-    caches.keys().then(keys => {
-      keys.forEach(key => caches.delete(key));
-    }).catch(()=>{});
-  }
-
   loadFrame('g1');
   setTimeout(() => loadFrame('g2'), 60);
   setTimeout(() => loadFrame('g3'), 120);
 });
 </script>
 
-<!-- ☕ Buy Me a Coffee -->
-<style>
-.bmac-wrap{position:fixed;bottom:22px;right:18px;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bmac-wrap a{
-  display:flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#FFDD00,#FFB800);
-  color:#111;font-weight:700;font-size:14px;
-  font-family:sans-serif;
-  padding:10px 16px;border-radius:50px;
-  text-decoration:none;white-space:nowrap;
-  box-shadow:0 4px 18px rgba(255,200,0,0.5);
-  transition:transform .15s,box-shadow .15s;
-}
-.bmac-wrap a:hover{transform:scale(1.05);box-shadow:0 6px 24px rgba(255,200,0,0.65);}
-.bmac-sub{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(255,220,80,0.65);text-transform:uppercase;}
-</style>
-<div class="bmac-wrap">
-  <a href="https://buymeacoffee.com/Mteeslanguages" target="_blank" rel="noopener">☕ Buy me a coffee</a>
-  <span class="bmac-sub">Support this app</span>
-</div>
-
-<!-- 🔒 Paywall Modal -->
-<style>
-.pw-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,22,0.94);backdrop-filter:blur(14px);z-index:99000;align-items:center;justify-content:center;}
-.pw-overlay.show{display:flex;}
-.pw-box{background:linear-gradient(145deg,#0f1423,#1a2035);border:1px solid rgba(245,200,66,0.3);border-radius:20px;padding:34px 26px 28px;max-width:330px;width:92%;text-align:center;box-shadow:0 0 60px rgba(245,200,66,0.12);}
-.pw-icon{font-size:44px;margin-bottom:10px;}
-.pw-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#f5c842;margin-bottom:6px;}
-.pw-desc{font-family:'DM Mono',monospace;font-size:11px;color:#8a8070;line-height:1.7;margin-bottom:18px;}
-.pw-price{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:#fff;margin-bottom:4px;}
-.pw-price span{font-size:18px;color:#8a8070;}
-.pw-feats{list-style:none;margin:0 0 22px;padding:0;text-align:left;}
-.pw-feats li{font-family:'DM Mono',monospace;font-size:11px;color:#c0b898;padding:5px 0;border-bottom:1px solid rgba(245,200,66,0.07);display:flex;gap:8px;}
-.pw-paybtn{display:block;width:100%;background:linear-gradient(135deg,#f5c842,#e0a820);color:#000;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px;box-shadow:0 4px 20px rgba(245,200,66,0.3);transition:transform .15s;}
-.pw-paybtn:hover{transform:scale(1.03);}
-.pw-close{background:none;border:1px solid rgba(245,200,66,0.2);color:#8a8070;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;padding:8px 20px;border-radius:20px;cursor:pointer;text-transform:uppercase;}
-.pw-close:hover{border-color:rgba(245,200,66,0.4);color:#f5c842;}
-.pw-paid{font-family:'DM Mono',monospace;font-size:9px;color:rgba(245,200,66,0.4);margin-top:12px;line-height:1.7;}
-.pw-paid button{background:none;border:none;color:rgba(245,200,66,0.5);font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;text-decoration:underline;margin-top:5px;display:block;margin:5px auto 0;}
-</style>
-
-<div class="pw-overlay" id="pw-overlay">
-  <div class="pw-box">
-    <div class="pw-icon">🔒</div>
-    <div class="pw-title">Premium Levels</div>
-    <div class="pw-desc">Unlock B1 → C2 — intermediate to mastery level German</div>
-    <div class="pw-price">$7.00 <span>once</span></div>
-    <ul class="pw-feats">
-      <li>✦ B1 — Intermediate conversations</li>
-      <li>✦ B2 — Advanced fluency</li>
-      <li>✦ C1 — Professional mastery</li>
-      <li>✦ C2 — Native-level precision</li>
-      <li>✦ Lifetime access, no subscription</li>
-    </ul>
-    <a class="pw-paybtn" href="https://www.paypal.me/MichaelAsante438/7" target="_blank" rel="noopener">
-      💳 Unlock with PayPal — $7.00
-    </a>
-    <button class="pw-close" onclick="document.getElementById('pw-overlay').classList.remove('show')">Maybe later</button>
-    <div class="pw-paid">
-      Already paid?
-      <button onclick="pwUnlock()">✓ I've paid — unlock now</button>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  let unlocked = sessionStorage.getItem('pw_unlocked') === '1';
-
-  window.pwUnlock = function(){
-    unlocked = true;
-    sessionStorage.setItem('pw_unlocked','1');
-    document.getElementById('pw-overlay').classList.remove('show');
-    const t = document.createElement('div');
-    t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f1a0f;border:1px solid rgba(80,200,120,0.4);color:#50c878;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;padding:11px 22px;border-radius:20px;z-index:999999;';
-    t.textContent='✓ Premium unlocked — B1 to C2 accessible!';
-    document.body.appendChild(t);
-    setTimeout(()=>t.remove(),4000);
-  };
-
-  // Hook into the existing switchTo function AFTER the page loads
-  // so it doesn't break the game initialisation
-  window.addEventListener('load', function(){
-    const orig = window.switchTo;
-    if(typeof orig !== 'function') return;
-    window.switchTo = function(id){
-      // We don't lock by tab id since tabs are g1/g2/g3 not levels
-      // Paywall is triggered by CEFR level buttons inside the iframes
-      orig(id);
-    };
-
-    // Listen for messages from iframes requesting paywall
-    window.addEventListener('message', function(e){
-      if(e.data && e.data.type === 'show-paywall' && !unlocked){
-        document.getElementById('pw-overlay').classList.add('show');
-      }
-      if(e.data && e.data.type === 'check-unlock'){
-        // respond to iframe
-        if(e.source) e.source.postMessage({type:'unlock-status', unlocked: unlocked}, '*');
-      }
-    });
-  });
-})();
-</script>
-
-
-<!-- ═══ SECURITY SCRIPT ═══ -->
-<script>
-(function(){
-  'use strict';
-
-  // 1. CLICKJACKING PROTECTION — bust out if embedded in foreign iframe
-  if (window.top !== window.self) {
-    try {
-      if (window.top.location.hostname !== window.location.hostname) {
-        window.top.location = window.location;
-      }
-    } catch(e) {
-      document.documentElement.style.display = 'none';
-    }
-  }
-
-  // 2. PAYWALL BRUTE-FORCE PROTECTION
-  let unlockAttempts = parseInt(sessionStorage.getItem('_ua') || '0');
-  const MAX_ATTEMPTS = 5;
-  const _origUnlock = window.pwUnlock;
-  window.pwUnlock = function() {
-    unlockAttempts++;
-    sessionStorage.setItem('_ua', unlockAttempts);
-    if (unlockAttempts > MAX_ATTEMPTS) {
-      const box = document.querySelector('.pw-box');
-      if (box) box.innerHTML = '<div style="padding:30px;font-family:'DM Mono',monospace;color:#f5c842;font-size:12px;text-align:center;line-height:2.2;">⚠️ Too many attempts.<br>Please complete your PayPal payment<br>and refresh the page.<br><br><a href="https://www.paypal.me/MichaelAsante438/7" target="_blank" style="color:#f5c842;text-decoration:underline;">→ Pay via PayPal — $7.00</a></div>';
-      return;
-    }
-    if (typeof _origUnlock === 'function') _origUnlock();
-  };
-
-  // 3. DEVTOOLS CONSOLE WARNING (no keyboard blocking — game needs keys)
-  console.log('%c🔒 Protected App', 'color:red;font-size:28px;font-weight:bold;');
-  console.log('%cThis application is protected. Tampering may violate applicable law.', 'color:#f5c842;font-size:13px;');
-
-  // 4. XSS SANITIZER — available globally for any dynamic content
-  window._sanitize = function(str) {
-    if (typeof str !== 'string') return '';
-    const d = document.createElement('div');
-    d.appendChild(document.createTextNode(str));
-    return d.innerHTML;
-  };
-
-  // 5. SAFE POSTMESSAGE VALIDATION — only trust same origin or blob
-  window.addEventListener('message', function(e) {
-    const trusted = [window.location.origin, 'null', ''];
-    if (e.origin && !trusted.includes(e.origin) && !e.origin.startsWith('blob:')) {
-      return; // silently ignore untrusted origins
-    }
-  }, true);
-
-  // 6. INTEGRITY CHECK on load
-  window.addEventListener('load', function() {
-    ['pw-overlay','bmac-wrap'].forEach(function(id) {
-      if (!document.getElementById(id) && !document.querySelector('.' + id)) {
-        console.warn('Security: element missing — possible DOM tampering.');
-      }
-    });
-  });
-
-})();
-</script>
-
+<!-- BMAC -->
+<style>.bmac-wrap{position:fixed;bottom:80px;right:18px;z-index:8000;display:flex;flex-direction:column;align-items:center;gap:5px;}.bmac-wrap a{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFDD00,#FFB800);color:#111;font-weight:700;font-size:14px;font-family:sans-serif;padding:10px 16px;border-radius:50px;text-decoration:none;white-space:nowrap;box-shadow:0 4px 18px rgba(255,200,0,0.5);}.bmac-sub{font-family:monospace;font-size:9px;color:rgba(255,220,80,0.6);}</style>
+<div class="bmac-wrap"><a href="https://buymeacoffee.com/Mteeslanguages" target="_blank" rel="noopener">☕ Buy me a coffee</a><span class="bmac-sub">Support this app</span></div>
+<!-- PAYWALL -->
+<style>.pw-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,22,0.94);backdrop-filter:blur(14px);z-index:99000;align-items:center;justify-content:center;}.pw-overlay.show{display:flex;}.pw-box{background:#0f1423;border:1px solid rgba(245,200,66,0.3);border-radius:20px;padding:34px 26px;max-width:330px;width:92%;text-align:center;}.pw-icon{font-size:44px;margin-bottom:10px;}.pw-title{font-family:serif;font-size:26px;font-weight:700;color:#f5c842;margin-bottom:8px;}.pw-desc{font-family:monospace;font-size:11px;color:#8a8070;line-height:1.7;margin-bottom:16px;}.pw-price{font-family:serif;font-size:44px;font-weight:700;color:#fff;margin-bottom:16px;}.pw-feats{list-style:none;margin:0 0 20px;padding:0;text-align:left;}.pw-feats li{font-family:monospace;font-size:11px;color:#c0b898;padding:5px 0;border-bottom:1px solid rgba(245,200,66,0.07);}.pw-paybtn{display:block;width:100%;background:linear-gradient(135deg,#f5c842,#e0a820);color:#000;font-family:monospace;font-size:12px;font-weight:700;text-transform:uppercase;padding:14px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px;}.pw-close{background:none;border:1px solid rgba(245,200,66,0.2);color:#8a8070;font-family:monospace;font-size:10px;padding:8px 20px;border-radius:20px;cursor:pointer;}.pw-paid{font-family:monospace;font-size:9px;color:rgba(245,200,66,0.4);margin-top:12px;}.pw-paid button{background:none;border:none;color:rgba(245,200,66,0.5);font-family:monospace;font-size:9px;cursor:pointer;text-decoration:underline;display:block;margin:5px auto 0;}</style>
+<div class="pw-overlay" id="pw-overlay"><div class="pw-box"><div class="pw-icon">🔒</div><div class="pw-title">Premium Levels</div><div class="pw-desc">Unlock B1 to C2 — intermediate to mastery</div><div class="pw-price">$7.00</div><ul class="pw-feats"><li>✦ B1 — Intermediate</li><li>✦ B2 — Advanced fluency</li><li>✦ C1 — Professional mastery</li><li>✦ C2 — Native-level precision</li><li>✦ Lifetime access</li></ul><a class="pw-paybtn" href="https://www.paypal.me/MichaelAsante438/7" target="_blank" rel="noopener">💳 Unlock with PayPal — $7.00</a><button class="pw-close" onclick="document.getElementById('pw-overlay').classList.remove('show')">Maybe later</button><div class="pw-paid">Already paid? <button onclick="pwUnlock()">✓ I've paid — unlock now</button></div></div></div>
+<script>(function(){let u=sessionStorage.getItem("pw_unlocked")==="1",a=parseInt(sessionStorage.getItem("pw_attempts")||"0");window.pwUnlock=function(){a++;sessionStorage.setItem("pw_attempts",a);if(a>5){document.querySelector(".pw-box").innerHTML="<div style='padding:30px;color:#f5c842;font-family:monospace;text-align:center;'>⚠️ Too many attempts.<br><a href='https://www.paypal.me/MichaelAsante438/7' target='_blank' style='color:#f5c842;'>→ Pay via PayPal</a></div>";return;}u=true;sessionStorage.setItem("pw_unlocked","1");document.getElementById("pw-overlay").classList.remove("show");const t=document.createElement("div");t.style.cssText="position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f1a0f;border:1px solid rgba(80,200,120,0.4);color:#50c878;font-family:monospace;font-size:11px;padding:11px 22px;border-radius:20px;z-index:999999;";t.textContent="✓ Premium unlocked!";document.body.appendChild(t);setTimeout(()=>t.remove(),4000);};}());</script>
 </body>
 </html>
