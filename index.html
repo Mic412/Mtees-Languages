@@ -507,6 +507,10 @@ iframe{width:100%;height:100%;border:none;display:block;}
         <span class="tab-ico">🏆</span>
         <span class="tab-label">DeutschMeister</span>
       </button>
+      <button class="tab" id="tab-g4" onclick="switchTo('g4')">
+        <span class="tab-ico">📖</span>
+        <span class="tab-label">Konjugation</span>
+      </button>
     </div>
   </div>
 
@@ -522,6 +526,7 @@ iframe{width:100%;height:100%;border:none;display:block;}
     <div class="panel on" id="panel-g1"><iframe id="frame-g1" title="Sprachstufen"></iframe></div>
     <div class="panel"    id="panel-g2"><iframe id="frame-g2" title="Sprachspiel"></iframe></div>
     <div class="panel"    id="panel-g3"><iframe id="frame-g3" title="DeutschMeister"></iframe></div>
+    <div class="panel"    id="panel-g4"><iframe id="frame-g4" title="Konjugation"></iframe></div>
   </div>
 </div>
 
@@ -1490,6 +1495,96 @@ var LVS  = {A1:.65,A2:.68,B1:.82,B2:.85,C1:.9,C2:.93};
 var LVCSS= {A1:'var(--lA1)',A2:'var(--lA2)',B1:'var(--lB1)',B2:'var(--lB2)',C1:'var(--lC1)',C2:'var(--lC2)'};
 
 // ═══════════════════════════════════════════
+// VERB CONJUGATION TABLE (present tense)
+// ═══════════════════════════════════════════
+var VERB_CONJ = {
+  'bin':{inf:'sein',s1:'bin',s2:'bist',s3:'ist',p1:'sind',p2:'seid',p3:'sind'},
+  'bist':{inf:'sein',s1:'bin',s2:'bist',s3:'ist',p1:'sind',p2:'seid',p3:'sind'},
+  'ist':{inf:'sein',s1:'bin',s2:'bist',s3:'ist',p1:'sind',p2:'seid',p3:'sind'},
+  'sind':{inf:'sein',s1:'bin',s2:'bist',s3:'ist',p1:'sind',p2:'seid',p3:'sind'},
+  'habe':{inf:'haben',s1:'habe',s2:'hast',s3:'hat',p1:'haben',p2:'habt',p3:'haben'},
+  'hast':{inf:'haben',s1:'habe',s2:'hast',s3:'hat',p1:'haben',p2:'habt',p3:'haben'},
+  'hat':{inf:'haben',s1:'habe',s2:'hast',s3:'hat',p1:'haben',p2:'habt',p3:'haben'},
+  'werde':{inf:'werden',s1:'werde',s2:'wirst',s3:'wird',p1:'werden',p2:'werdet',p3:'werden'},
+  'wird':{inf:'werden',s1:'werde',s2:'wirst',s3:'wird',p1:'werden',p2:'werdet',p3:'werden'},
+  'gehe':{inf:'gehen',s1:'gehe',s2:'gehst',s3:'geht',p1:'gehen',p2:'geht',p3:'gehen'},
+  'geht':{inf:'gehen',s1:'gehe',s2:'gehst',s3:'geht',p1:'gehen',p2:'geht',p3:'gehen'},
+  'mache':{inf:'machen',s1:'mache',s2:'machst',s3:'macht',p1:'machen',p2:'macht',p3:'machen'},
+  'macht':{inf:'machen',s1:'mache',s2:'machst',s3:'macht',p1:'machen',p2:'macht',p3:'machen'},
+  'komme':{inf:'kommen',s1:'komme',s2:'kommst',s3:'kommt',p1:'kommen',p2:'kommt',p3:'kommen'},
+  'kommt':{inf:'kommen',s1:'komme',s2:'kommst',s3:'kommt',p1:'kommen',p2:'kommt',p3:'kommen'},
+  'sehe':{inf:'sehen',s1:'sehe',s2:'siehst',s3:'sieht',p1:'sehen',p2:'seht',p3:'sehen'},
+  'sieht':{inf:'sehen',s1:'sehe',s2:'siehst',s3:'sieht',p1:'sehen',p2:'seht',p3:'sehen'},
+  'weiß':{inf:'wissen',s1:'weiß',s2:'weißt',s3:'weiß',p1:'wissen',p2:'wisst',p3:'wissen'},
+  'kann':{inf:'können',s1:'kann',s2:'kannst',s3:'kann',p1:'können',p2:'könnt',p3:'können'},
+  'muss':{inf:'müssen',s1:'muss',s2:'musst',s3:'muss',p1:'müssen',p2:'müsst',p3:'müssen'},
+  'will':{inf:'wollen',s1:'will',s2:'willst',s3:'will',p1:'wollen',p2:'wollt',p3:'wollen'},
+  'soll':{inf:'sollen',s1:'soll',s2:'sollst',s3:'soll',p1:'sollen',p2:'sollt',p3:'sollen'},
+  'darf':{inf:'dürfen',s1:'darf',s2:'darfst',s3:'darf',p1:'dürfen',p2:'dürft',p3:'dürfen'},
+  'mag':{inf:'mögen',s1:'mag',s2:'magst',s3:'mag',p1:'mögen',p2:'mögt',p3:'mögen'},
+  'spreche':{inf:'sprechen',s1:'spreche',s2:'sprichst',s3:'spricht',p1:'sprechen',p2:'sprecht',p3:'sprechen'},
+  'spricht':{inf:'sprechen',s1:'spreche',s2:'sprichst',s3:'spricht',p1:'sprechen',p2:'sprecht',p3:'sprechen'},
+  'lerne':{inf:'lernen',s1:'lerne',s2:'lernst',s3:'lernt',p1:'lernen',p2:'lernt',p3:'lernen'},
+  'lernt':{inf:'lernen',s1:'lerne',s2:'lernst',s3:'lernt',p1:'lernen',p2:'lernt',p3:'lernen'},
+  'esse':{inf:'essen',s1:'esse',s2:'isst',s3:'isst',p1:'essen',p2:'esst',p3:'essen'},
+  'isst':{inf:'essen',s1:'esse',s2:'isst',s3:'isst',p1:'essen',p2:'esst',p3:'essen'},
+  'trinke':{inf:'trinken',s1:'trinke',s2:'trinkst',s3:'trinkt',p1:'trinken',p2:'trinkt',p3:'trinken'},
+  'trinkt':{inf:'trinken',s1:'trinke',s2:'trinkst',s3:'trinkt',p1:'trinken',p2:'trinkt',p3:'trinken'},
+  'schlafe':{inf:'schlafen',s1:'schlafe',s2:'schläfst',s3:'schläft',p1:'schlafen',p2:'schlaft',p3:'schlafen'},
+  'schläft':{inf:'schlafen',s1:'schlafe',s2:'schläfst',s3:'schläft',p1:'schlafen',p2:'schlaft',p3:'schlafen'},
+  'arbeite':{inf:'arbeiten',s1:'arbeite',s2:'arbeitest',s3:'arbeitet',p1:'arbeiten',p2:'arbeitet',p3:'arbeiten'},
+  'arbeitet':{inf:'arbeiten',s1:'arbeite',s2:'arbeitest',s3:'arbeitet',p1:'arbeiten',p2:'arbeitet',p3:'arbeiten'},
+  'wohne':{inf:'wohnen',s1:'wohne',s2:'wohnst',s3:'wohnt',p1:'wohnen',p2:'wohnt',p3:'wohnen'},
+  'wohnt':{inf:'wohnen',s1:'wohne',s2:'wohnst',s3:'wohnt',p1:'wohnen',p2:'wohnt',p3:'wohnen'},
+  'kaufe':{inf:'kaufen',s1:'kaufe',s2:'kaufst',s3:'kauft',p1:'kaufen',p2:'kauft',p3:'kaufen'},
+  'lese':{inf:'lesen',s1:'lese',s2:'liest',s3:'liest',p1:'lesen',p2:'lest',p3:'lesen'},
+  'liest':{inf:'lesen',s1:'lese',s2:'liest',s3:'liest',p1:'lesen',p2:'lest',p3:'lesen'},
+  'schreibe':{inf:'schreiben',s1:'schreibe',s2:'schreibst',s3:'schreibt',p1:'schreiben',p2:'schreibt',p3:'schreiben'},
+  'schreibt':{inf:'schreiben',s1:'schreibe',s2:'schreibst',s3:'schreibt',p1:'schreiben',p2:'schreibt',p3:'schreiben'},
+  'fahre':{inf:'fahren',s1:'fahre',s2:'fährst',s3:'fährt',p1:'fahren',p2:'fahrt',p3:'fahren'},
+  'fährt':{inf:'fahren',s1:'fahre',s2:'fährst',s3:'fährt',p1:'fahren',p2:'fahrt',p3:'fahren'},
+  'helfe':{inf:'helfen',s1:'helfe',s2:'hilfst',s3:'hilft',p1:'helfen',p2:'helft',p3:'helfen'},
+  'hilft':{inf:'helfen',s1:'helfe',s2:'hilfst',s3:'hilft',p1:'helfen',p2:'helft',p3:'helfen'},
+  'finde':{inf:'finden',s1:'finde',s2:'findest',s3:'findet',p1:'finden',p2:'findet',p3:'finden'},
+  'findet':{inf:'finden',s1:'finde',s2:'findest',s3:'findet',p1:'finden',p2:'findet',p3:'finden'},
+  'brauche':{inf:'brauchen',s1:'brauche',s2:'brauchst',s3:'braucht',p1:'brauchen',p2:'braucht',p3:'brauchen'},
+  'braucht':{inf:'brauchen',s1:'brauche',s2:'brauchst',s3:'braucht',p1:'brauchen',p2:'braucht',p3:'brauchen'},
+  'denke':{inf:'denken',s1:'denke',s2:'denkst',s3:'denkt',p1:'denken',p2:'denkt',p3:'denken'},
+  'nehme':{inf:'nehmen',s1:'nehme',s2:'nimmst',s3:'nimmt',p1:'nehmen',p2:'nehmt',p3:'nehmen'},
+  'nimmt':{inf:'nehmen',s1:'nehme',s2:'nimmst',s3:'nimmt',p1:'nehmen',p2:'nehmt',p3:'nehmen'},
+  'gebe':{inf:'geben',s1:'gebe',s2:'gibst',s3:'gibt',p1:'geben',p2:'gebt',p3:'geben'},
+  'gibt':{inf:'geben',s1:'gebe',s2:'gibst',s3:'gibt',p1:'geben',p2:'gebt',p3:'geben'},
+  'stehe':{inf:'stehen',s1:'stehe',s2:'stehst',s3:'steht',p1:'stehen',p2:'steht',p3:'stehen'},
+  'steht':{inf:'stehen',s1:'stehe',s2:'stehst',s3:'steht',p1:'stehen',p2:'steht',p3:'stehen'},
+  'dusche':{inf:'duschen',s1:'dusche',s2:'duschst',s3:'duscht',p1:'duschen',p2:'duscht',p3:'duschen'},
+  'entspanne':{inf:'entspannen',s1:'entspanne',s2:'entspannst',s3:'entspannt',p1:'entspannen',p2:'entspannt',p3:'entspannen'},
+  'trainiere':{inf:'trainieren',s1:'trainiere',s2:'trainierst',s3:'trainiert',p1:'trainieren',p2:'trainiert',p3:'trainieren'},
+  'lebe':{inf:'leben',s1:'lebe',s2:'lebst',s3:'lebt',p1:'leben',p2:'lebt',p3:'leben'},
+  'lebt':{inf:'leben',s1:'lebe',s2:'lebst',s3:'lebt',p1:'leben',p2:'lebt',p3:'leben'},
+  'liebe':{inf:'lieben',s1:'liebe',s2:'liebst',s3:'liebt',p1:'lieben',p2:'liebt',p3:'lieben'},
+  'spiele':{inf:'spielen',s1:'spiele',s2:'spielst',s3:'spielt',p1:'spielen',p2:'spielt',p3:'spielen'},
+  'spielt':{inf:'spielen',s1:'spiele',s2:'spielst',s3:'spielt',p1:'spielen',p2:'spielt',p3:'spielen'},
+  'entwickle':{inf:'entwickeln',s1:'entwickle',s2:'entwickelst',s3:'entwickelt',p1:'entwickeln',p2:'entwickelt',p3:'entwickeln'},
+  'entwickelt':{inf:'entwickeln',s1:'entwickle',s2:'entwickelst',s3:'entwickelt',p1:'entwickeln',p2:'entwickelt',p3:'entwickeln'}
+};
+
+// Inject conjugation table CSS
+(function(){
+  var s=document.createElement('style');
+  s.textContent=
+    '.vconj-wrap{margin:.5rem 0 .4rem;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:.45rem .6rem;overflow-x:auto;}'+
+    '.vconj-inf{font-family:"DM Mono",monospace;font-size:.62rem;color:#38bdf8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;opacity:.85;}'+
+    '.vconj-tbl{width:100%;border-collapse:collapse;font-size:.7rem;}'+
+    '.vconj-tbl th{font-family:"DM Mono",monospace;font-size:.58rem;letter-spacing:.05em;color:#6b7280;font-weight:500;padding:2px 5px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}'+
+    '.vconj-tbl td{padding:2px 5px;color:#e2e8f0;line-height:1.5;}'+
+    '.vconj-tbl em{color:#6b7280;font-style:normal;margin-right:2px;}'+
+    '.vconj-tbl tr:nth-child(even) td{background:rgba(255,255,255,.02);}'+
+    '.vconj-pron{font-family:"DM Mono",monospace;font-size:.58rem;color:#6b7280;white-space:nowrap;}';
+  document.head.appendChild(s);
+})();
+
+
+// ═══════════════════════════════════════════
 // AUDIO
 // ═══════════════════════════════════════════
 function toggleAudio(){
@@ -1606,6 +1701,33 @@ function renderStudy(){
     bindSpk(spk,r.de,LVS[r.level]||.82);
     top.appendChild(badge); top.appendChild(de); top.appendChild(spk);
 
+    // ── VERB CONJUGATION TABLE ──
+    var verbParts=r.parts.filter(function(p){return p[1]==='verb'});
+    if(verbParts.length>0){
+      // Extract the core infinitive verb from the sentence part
+      var rawVerb=verbParts[0][0];
+      // Pull first word as the conjugated form to find the infinitive
+      var conjForm=rawVerb.split(' ')[0].toLowerCase();
+      // Look up conjugation from our table
+      var conj=VERB_CONJ[conjForm]||VERB_CONJ[rawVerb.toLowerCase()];
+      if(conj){
+        var tbl=mk('div','vconj-wrap');
+        tbl.innerHTML='<div class="vconj-inf">'+conj.inf+'</div>'+
+          '<table class="vconj-tbl"><thead><tr>'+
+          '<th></th><th>Singular</th><th>Plural</th></tr></thead><tbody>'+
+          '<tr><td class="vconj-pron">1st</td><td><em>ich</em> '+conj.s1+'</td><td><em>wir</em> '+conj.p1+'</td></tr>'+
+          '<tr><td class="vconj-pron">2nd</td><td><em>du</em> '+conj.s2+'</td><td><em>ihr</em> '+conj.p2+'</td></tr>'+
+          '<tr><td class="vconj-pron">3rd</td><td><em>er/sie</em> '+conj.s3+'</td><td><em>sie/Sie</em> '+conj.p3+'</td></tr>'+
+          '</tbody></table>';
+        card.appendChild(top);
+        card.appendChild(tbl);
+      } else {
+        card.appendChild(top);
+      }
+    } else {
+      card.appendChild(top);
+    }
+
     var en=mk('div','ren'); en.textContent=r.en;
     var pr=mk('div','pos-row');
     r.parts.forEach(function(p){var s=mk('span','ptag pt-'+p[1]);s.textContent=p[0];pr.appendChild(s)});
@@ -1614,7 +1736,7 @@ function renderStudy(){
     var up=mk('div',isC2?'rup done':'rup');
     up.textContent=isC2?'✦ C2 register reached.':r.upgrade;
 
-    card.appendChild(top); card.appendChild(en); card.appendChild(pr);
+    card.appendChild(en); card.appendChild(pr);
     card.appendChild(tip); card.appendChild(up);
     ct.appendChild(card);
   });
@@ -2734,6 +2856,14 @@ window.addEventListener('load',function(){
           <div id="daily-content"></div>
         </div>
       </div>
+      <!-- CONJUGATION PANEL -->
+      <div class="panel" id="panel-conjugation">
+        <div class="grammar-section">
+          <h2>Verb Conjugation · Verbkonjugation</h2>
+          <p>Present · Past · Future — full pronoun tables for 40 verbs</p>
+          <div id="conj-panel-content"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -3539,6 +3669,14 @@ function renderTabs() {
   ls.title = 'Life & Society + CEFR 3';
   ls.addEventListener('click', () => switchTab('life'));
   container.appendChild(ls);
+
+  const cv = document.createElement('button');
+  cv.className = 'tab-btn';
+  cv.dataset.id = 'conjugation';
+  cv.innerHTML = '🔀 Conjugation';
+  cv.title = 'Verb Conjugation · Present, Past & Future';
+  cv.addEventListener('click', () => { switchTab('conjugation'); renderConjPanel(); });
+  container.appendChild(cv);
 }
 
 function switchTab(id) {
@@ -6288,6 +6426,238 @@ function updateOnlineStatus() {
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', updateOnlineStatus);
 updateOnlineStatus();
+<style>
+.conj-section-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:#7eb8f7;margin:1.5rem 0 .4rem;padding-bottom:.3rem;border-bottom:2px solid rgba(126,184,247,.25);}
+.conj-pronouns-intro{background:rgba(126,184,247,.06);border:1px solid rgba(126,184,247,.15);border-radius:10px;padding:.9rem 1rem;margin-bottom:1.2rem;}
+.conj-pronoun-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem;margin:.5rem 0;}
+.conj-pron-row{display:flex;align-items:baseline;gap:.5rem;}
+.conj-pron-de{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:#7eb8f7;min-width:3.2rem;}
+.conj-pron-en{font-size:.72rem;color:#6b7280;}
+.conj-verb-card{background:rgba(255,255,255,.03);border:1px solid rgba(126,184,247,.15);border-radius:10px;padding:.8rem .9rem;margin-bottom:1rem;}
+.conj-verb-header{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.6rem;}
+.conj-verb-inf{font-family:'Playfair Display',serif;font-size:1rem;color:#7eb8f7;}
+.conj-verb-en{font-size:.7rem;color:#6b7280;font-style:italic;}
+.conj-tense-block{margin-bottom:.7rem;}
+.conj-tense-lbl{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:#38bdf8;margin:.4rem 0 .2rem;border-bottom:1px solid rgba(56,189,248,.14);padding-bottom:.12rem;}
+.conj-tbl{width:100%;border-collapse:collapse;font-size:.68rem;}
+.conj-tbl th{font-family:'IBM Plex Mono',monospace;font-size:.55rem;color:#6b7280;font-weight:500;padding:2px 5px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}
+.conj-tbl td{padding:3px 5px;color:#e2e8f0;line-height:1.55;}
+.conj-tbl em{color:#6b7280;font-style:normal;font-size:.6rem;margin-right:3px;}
+.conj-tbl tr:nth-child(even) td{background:rgba(255,255,255,.025);}
+.conj-tbl td.hi{color:#f0c060;}
+.conj-pron-col{font-family:'IBM Plex Mono',monospace;font-size:.56rem;color:#6b7280;white-space:nowrap;}
+.conj-example{font-size:.67rem;color:#94a3b8;line-height:1.45;}
+.conj-example em{color:#f0c060;font-style:normal;}
+.conj-search{width:100%;background:rgba(0,0,0,.3);border:1px solid rgba(126,184,247,.25);border-radius:8px;padding:.4rem .7rem;color:#e2e8f0;font-size:.82rem;margin-bottom:1rem;outline:none;box-sizing:border-box;}
+.conj-search:focus{border-color:#7eb8f7;}
+.conj-grp-lbl{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#38bdf8;margin:1.2rem 0 .45rem;padding-bottom:.15rem;border-bottom:1px solid rgba(56,189,248,.14);}
+.conj-tabs{display:flex;gap:.35rem;margin-bottom:1rem;flex-wrap:wrap;}
+.conj-tab{font-family:'IBM Plex Mono',monospace;font-size:.6rem;padding:.3rem .65rem;border-radius:6px;border:1px solid rgba(126,184,247,.2);background:rgba(255,255,255,.03);color:#94a3b8;cursor:pointer;}
+.conj-tab.active{background:rgba(126,184,247,.15);color:#7eb8f7;border-color:#7eb8f7;}
+.conj-view{display:none;}.conj-view.active{display:block;}
+</style>
+<script>
+(function(){
+var PRON6=['ich','du','er/sie/es','wir','ihr','sie/Sie'];
+var PRON6_EN=['I','you (inf)','he/she/it','we','you all','they/you(formal)'];
+var TENSES=[
+  {key:'pr',label:'Present - Praesens',sub:'what is happening now'},
+  {key:'pa',label:'Past - Praeteritum',sub:'what happened'},
+  {key:'fu',label:'Future - Futur I',sub:'what will happen'}
+];
+var VB=[
+{g:'Auxiliary',inf:'sein',en:'to be',pr:['bin','bist','ist','sind','seid','sind'],pa:['war','warst','war','waren','wart','waren'],fu:['werde sein','wirst sein','wird sein','werden sein','werdet sein','werden sein'],ex:{pr:['Ich bin muede. (I am tired.)','Du bist nett. (You are kind.)','Er/Sie ist gross. (He/She is tall.)','Wir sind hier. (We are here.)','Ihr seid spaet. (You all are late.)','Sie sind Lehrer. (They are teachers.)'],pa:['Ich war zu Hause. (I was at home.)','Du warst krank. (You were sick.)','Er war muede. (He was tired.)','Wir waren zusammen. (We were together.)','Ihr wart laut. (You all were loud.)','Sie waren gluecklich. (They were happy.)'],fu:['Ich werde bereit sein. (I will be ready.)','Du wirst stark sein. (You will be strong.)','Es wird spaet sein. (It will be late.)','Wir werden da sein. (We will be there.)','Ihr werdet puenktlich sein. (You will be on time.)','Sie werden erfolgreich sein. (They will be successful.)']}},
+{g:'Auxiliary',inf:'haben',en:'to have',pr:['habe','hast','hat','haben','habt','haben'],pa:['hatte','hattest','hatte','hatten','hattet','hatten'],fu:['werde haben','wirst haben','wird haben','werden haben','werdet haben','werden haben'],ex:{pr:['Ich habe Hunger. (I am hungry.)','Du hast Zeit. (You have time.)','Er hat ein Auto. (He has a car.)','Wir haben Glueck. (We are lucky.)','Ihr habt Recht. (You all are right.)','Sie haben Kinder. (They have children.)'],pa:['Ich hatte Angst. (I was scared.)','Du hattest eine Idee. (You had an idea.)','Sie hatte Fieber. (She had a fever.)','Wir hatten Spass. (We had fun.)','Ihr hattet Erfolg. (You all had success.)','Sie hatten keine Zeit. (They had no time.)'],fu:['Ich werde mehr Geld haben. (I will have more money.)','Du wirst Erfolg haben. (You will have success.)','Er wird keine Wahl haben. (He will have no choice.)','Wir werden genug haben. (We will have enough.)','Ihr werdet Spass haben. (You will have fun.)','Sie werden alles haben. (They will have everything.)']}},
+{g:'Auxiliary',inf:'werden',en:'to become',pr:['werde','wirst','wird','werden','werdet','werden'],pa:['wurde','wurdest','wurde','wurden','wurdet','wurden'],fu:['werde werden','wirst werden','wird werden','werden werden','werdet werden','werden werden'],ex:{pr:['Ich werde Arzt. (I am becoming a doctor.)','Du wirst muede. (You are getting tired.)','Es wird kalt. (It is getting cold.)','Wir werden aelter. (We are getting older.)','Ihr werdet besser. (You all are improving.)','Sie werden bekannt. (They are becoming famous.)'],pa:['Ich wurde nervoes. (I became nervous.)','Du wurdest staerker. (You became stronger.)','Er wurde krank. (He became ill.)','Wir wurden Freunde. (We became friends.)','Ihr wurdet leise. (You all became quiet.)','Sie wurden Meister. (They became champions.)'],fu:['Ich werde Ingenieur werden. (I will become an engineer.)','Du wirst besser werden. (You will get better.)','Es wird waermer werden. (It will get warmer.)','Wir werden staerker werden. (We will get stronger.)','Ihr werdet erfahrener werden. (You will gain experience.)','Sie werden Profis werden. (They will become professionals.)']}},
+{g:'Modal',inf:'koennen',en:'can / to be able to',pr:['kann','kannst','kann','koennen','koennt','koennen'],pa:['konnte','konntest','konnte','konnten','konntet','konnten'],fu:['werde koennen','wirst koennen','wird koennen','werden koennen','werdet koennen','werden koennen'],ex:{pr:['Ich kann schwimmen. (I can swim.)','Du kannst gut kochen. (You can cook well.)','Er kann Klavier spielen. (He can play piano.)','Wir koennen helfen. (We can help.)','Ihr koennt kommen. (You all can come.)','Sie koennen Deutsch. (They know German.)'],pa:['Ich konnte nicht schlafen. (I could not sleep.)','Du konntest es sehen. (You could see it.)','Sie konnte nicht kommen. (She could not come.)','Wir konnten gewinnen. (We were able to win.)','Ihr konntet lachen. (You all could laugh.)','Sie konnten es schaffen. (They could manage it.)'],fu:['Ich werde es koennen. (I will be able to do it.)','Du wirst besser koennen. (You will be able to do better.)','Er wird fahren koennen. (He will be able to drive.)','Wir werden gewinnen koennen. (We will be able to win.)','Ihr werdet es koennen. (You all will manage.)','Sie werden helfen koennen. (They will be able to help.)']}},
+{g:'Modal',inf:'muessen',en:'must / have to',pr:['muss','musst','muss','muessen','muesst','muessen'],pa:['musste','musstest','musste','mussten','musstet','mussten'],fu:['werde muessen','wirst muessen','wird muessen','werden muessen','werdet muessen','werden muessen'],ex:{pr:['Ich muss arbeiten. (I have to work.)','Du musst lernen. (You must study.)','Er muss puenktlich sein. (He must be on time.)','Wir muessen gehen. (We have to go.)','Ihr muesst aufraeumen. (You all must tidy up.)','Sie muessen warten. (They must wait.)'],pa:['Ich musste frueh aufstehen. (I had to get up early.)','Du musstest bleiben. (You had to stay.)','Sie musste weinen. (She had to cry.)','Wir mussten kaempfen. (We had to fight.)','Ihr musstet leise sein. (You all had to be quiet.)','Sie mussten fliehen. (They had to flee.)'],fu:['Ich werde mehr ueben muessen. (I will have to practise more.)','Du wirst entscheiden muessen. (You will have to decide.)','Er wird zahlen muessen. (He will have to pay.)','Wir werden umziehen muessen. (We will have to move.)','Ihr werdet warten muessen. (You will have to wait.)','Sie werden kaempfen muessen. (They will have to fight.)']}},
+{g:'Modal',inf:'wollen',en:'to want to',pr:['will','willst','will','wollen','wollt','wollen'],pa:['wollte','wolltest','wollte','wollten','wolltet','wollten'],fu:['werde wollen','wirst wollen','wird wollen','werden wollen','werdet wollen','werden wollen'],ex:{pr:['Ich will Kaffee. (I want coffee.)','Du willst schlafen. (You want to sleep.)','Er will gewinnen. (He wants to win.)','Wir wollen reisen. (We want to travel.)','Ihr wollt spielen. (You all want to play.)','Sie wollen helfen. (They want to help.)'],pa:['Ich wollte nicht luegen. (I did not want to lie.)','Du wolltest bleiben. (You wanted to stay.)','Sie wollte tanzen. (She wanted to dance.)','Wir wollten Pizza essen. (We wanted to eat pizza.)','Ihr wolltet gewinnen. (You all wanted to win.)','Sie wollten Frieden. (They wanted peace.)'],fu:['Ich werde reisen wollen. (I will want to travel.)','Du wirst mehr wollen. (You will want more.)','Er wird siegen wollen. (He will want to win.)','Wir werden feiern wollen. (We will want to celebrate.)','Ihr werdet es wollen. (You all will want it.)','Sie werden aendern wollen. (They will want to change.)']}},
+{g:'Movement',inf:'gehen',en:'to go / walk',pr:['gehe','gehst','geht','gehen','geht','gehen'],pa:['ging','gingst','ging','gingen','gingt','gingen'],fu:['werde gehen','wirst gehen','wird gehen','werden gehen','werdet gehen','werden gehen'],ex:{pr:['Ich gehe zur Schule. (I go to school.)','Du gehst nach Hause. (You are going home.)','Er geht joggen. (He is going jogging.)','Wir gehen spazieren. (We go for a walk.)','Ihr geht einkaufen. (You all are shopping.)','Sie gehen ins Kino. (They are going to the cinema.)'],pa:['Ich ging ins Buero. (I went to the office.)','Du gingst zu spaet. (You went too late.)','Sie ging nach Hause. (She went home.)','Wir gingen zusammen. (We went together.)','Ihr gingt durch den Park. (You all went through the park.)','Sie gingen tanzen. (They went dancing.)'],fu:['Ich werde morgen gehen. (I will go tomorrow.)','Du wirst allein gehen. (You will go alone.)','Er wird zur Party gehen. (He will go to the party.)','Wir werden zusammen gehen. (We will go together.)','Ihr werdet frueh gehen. (You all will leave early.)','Sie werden ins Ausland gehen. (They will go abroad.)']}},
+{g:'Movement',inf:'kommen',en:'to come',pr:['komme','kommst','kommt','kommen','kommt','kommen'],pa:['kam','kamst','kam','kamen','kamt','kamen'],fu:['werde kommen','wirst kommen','wird kommen','werden kommen','werdet kommen','werden kommen'],ex:{pr:['Ich komme gleich. (I am coming right away.)','Du kommst zu spaet. (You are arriving late.)','Er kommt aus Berlin. (He comes from Berlin.)','Wir kommen heute Abend. (We are coming this evening.)','Ihr kommt zur Party. (You all are coming to the party.)','Sie kommen morgen. (They are coming tomorrow.)'],pa:['Ich kam gestern an. (I arrived yesterday.)','Du kamst ueberraschend. (You came unexpectedly.)','Sie kam aus Paris. (She came from Paris.)','Wir kamen zu Besuch. (We came to visit.)','Ihr kamt zu spaet. (You all arrived too late.)','Sie kamen nicht. (They did not come.)'],fu:['Ich werde kommen. (I will come.)','Du wirst rechtzeitig kommen. (You will come on time.)','Er wird heute kommen. (He will come today.)','Wir werden zusammen kommen. (We will come together.)','Ihr werdet auch kommen. (You all will come too.)','Sie werden nicht kommen. (They will not come.)']}},
+{g:'Daily Life',inf:'machen',en:'to do / make',pr:['mache','machst','macht','machen','macht','machen'],pa:['machte','machtest','machte','machten','machtet','machten'],fu:['werde machen','wirst machen','wird machen','werden machen','werdet machen','werden machen'],ex:{pr:['Ich mache Hausaufgaben. (I do homework.)','Du machst gute Arbeit. (You do good work.)','Er macht das Fenster auf. (He opens the window.)','Wir machen eine Pause. (We are taking a break.)','Ihr macht Musik. (You all make music.)','Sie machen Urlaub. (They are on holiday.)'],pa:['Ich machte einen Fehler. (I made a mistake.)','Du machtest einen Vorschlag. (You made a suggestion.)','Sie machte die Tuer zu. (She closed the door.)','Wir machten eine Reise. (We took a trip.)','Ihr machtet Fotos. (You all took photos.)','Sie machten gute Arbeit. (They did good work.)'],fu:['Ich werde es besser machen. (I will do it better.)','Du wirst deinen Job machen. (You will do your job.)','Er wird einen Plan machen. (He will make a plan.)','Wir werden eine Party machen. (We will throw a party.)','Ihr werdet Sport machen. (You all will exercise.)','Sie werden Fortschritte machen. (They will make progress.)']}},
+{g:'Daily Life',inf:'essen',en:'to eat',pr:['esse','isst','isst','essen','esst','essen'],pa:['ass','assest','ass','assen','asst','assen'],fu:['werde essen','wirst essen','wird essen','werden essen','werdet essen','werden essen'],ex:{pr:['Ich esse Brot. (I eat bread.)','Du isst zu wenig. (You eat too little.)','Er isst gern Pizza. (He likes to eat pizza.)','Wir essen zusammen. (We eat together.)','Ihr esst im Restaurant. (You all eat out.)','Sie essen vegetarisch. (They eat vegetarian.)'],pa:['Ich ass zu viel. (I ate too much.)','Du assest nichts. (You ate nothing.)','Sie ass Kuchen. (She ate cake.)','Wir assen draussen. (We ate outside.)','Ihr asst Pizza. (You all ate pizza.)','Sie assen gut. (They ate well.)'],fu:['Ich werde Salat essen. (I will eat salad.)','Du wirst mehr Fruechte essen. (You will eat more fruit.)','Er wird im Cafe essen. (He will eat at the cafe.)','Wir werden zusammen essen. (We will eat together.)','Ihr werdet gesund essen. (You all will eat healthily.)','Sie werden draussen essen. (They will eat outside.)']}},
+{g:'Daily Life',inf:'schlafen',en:'to sleep',pr:['schlafe','schlaefst','schlaeft','schlafen','schlaft','schlafen'],pa:['schlief','schliefst','schlief','schliefen','schlieft','schliefen'],fu:['werde schlafen','wirst schlafen','wird schlafen','werden schlafen','werdet schlafen','werden schlafen'],ex:{pr:['Ich schlafe acht Stunden. (I sleep eight hours.)','Du schlaefst schlecht. (You sleep poorly.)','Das Baby schlaeft. (The baby is sleeping.)','Wir schlafen frueh. (We sleep early.)','Ihr schlaft zu lange. (You all sleep too long.)','Sie schlafen tief. (They sleep deeply.)'],pa:['Ich schlief sofort ein. (I fell asleep immediately.)','Du schliefst durch. (You slept through it.)','Er schlief lang. (He slept long.)','Wir schliefen draussen. (We slept outside.)','Ihr schlieft im Zelt. (You all slept in the tent.)','Sie schliefen gut. (They slept well.)'],fu:['Ich werde frueh schlafen. (I will sleep early.)','Du wirst besser schlafen. (You will sleep better.)','Er wird lang schlafen. (He will sleep long.)','Wir werden gut schlafen. (We will sleep well.)','Ihr werdet genug schlafen. (You all will get enough sleep.)','Sie werden besser schlafen. (They will sleep better.)']}},
+{g:'Daily Life',inf:'arbeiten',en:'to work',pr:['arbeite','arbeitest','arbeitet','arbeiten','arbeitet','arbeiten'],pa:['arbeitete','arbeitetest','arbeitete','arbeiteten','arbeitetet','arbeiteten'],fu:['werde arbeiten','wirst arbeiten','wird arbeiten','werden arbeiten','werdet arbeiten','werden arbeiten'],ex:{pr:['Ich arbeite von zu Hause. (I work from home.)','Du arbeitest zu viel. (You work too much.)','Er arbeitet in Berlin. (He works in Berlin.)','Wir arbeiten als Team. (We work as a team.)','Ihr arbeitet gut zusammen. (You all work well together.)','Sie arbeiten an einem Projekt. (They work on a project.)'],pa:['Ich arbeitete die ganze Nacht. (I worked all night.)','Du arbeitetest hart. (You worked hard.)','Sie arbeitete in Muenchen. (She worked in Munich.)','Wir arbeiteten zusammen. (We worked together.)','Ihr arbeitetet perfekt. (You all worked perfectly.)','Sie arbeiteten fleissig. (They worked diligently.)'],fu:['Ich werde mehr arbeiten. (I will work more.)','Du wirst im Ausland arbeiten. (You will work abroad.)','Er wird von zuhause arbeiten. (He will work from home.)','Wir werden zusammen arbeiten. (We will work together.)','Ihr werdet hart arbeiten. (You all will work hard.)','Sie werden Ueberstunden arbeiten. (They will work overtime.)']}},
+{g:'Communication',inf:'sprechen',en:'to speak',pr:['spreche','sprichst','spricht','sprechen','sprecht','sprechen'],pa:['sprach','sprachst','sprach','sprachen','spracht','sprachen'],fu:['werde sprechen','wirst sprechen','wird sprechen','werden sprechen','werdet sprechen','werden sprechen'],ex:{pr:['Ich spreche Deutsch. (I speak German.)','Du sprichst zu leise. (You speak too quietly.)','Er spricht drei Sprachen. (He speaks three languages.)','Wir sprechen offen. (We speak openly.)','Ihr sprecht zu schnell. (You all speak too fast.)','Sie sprechen fliessend. (They speak fluently.)'],pa:['Ich sprach mit dem Chef. (I spoke with the boss.)','Du sprachst sehr laut. (You spoke very loudly.)','Sie sprach auf der Buehne. (She spoke on stage.)','Wir sprachen lange. (We spoke for a long time.)','Ihr spracht ueber alles. (You all spoke about everything.)','Sie sprachen auf Englisch. (They spoke in English.)'],fu:['Ich werde Spanisch sprechen. (I will speak Spanish.)','Du wirst vor der Klasse sprechen. (You will speak in front of the class.)','Er wird oeffentlich sprechen. (He will speak publicly.)','Wir werden offen sprechen. (We will speak openly.)','Ihr werdet fliessend sprechen. (You all will speak fluently.)','Sie werden auf der Konferenz sprechen. (They will speak at the conference.)']}},
+{g:'Communication',inf:'sagen',en:'to say / tell',pr:['sage','sagst','sagt','sagen','sagt','sagen'],pa:['sagte','sagtest','sagte','sagten','sagtet','sagten'],fu:['werde sagen','wirst sagen','wird sagen','werden sagen','werdet sagen','werden sagen'],ex:{pr:['Ich sage die Wahrheit. (I tell the truth.)','Du sagst immer ja. (You always say yes.)','Er sagt nichts. (He says nothing.)','Wir sagen Danke. (We say thank you.)','Ihr sagt Bescheid. (You all notify someone.)','Sie sagen Hallo. (They say hello.)'],pa:['Ich sagte nichts. (I said nothing.)','Du sagtest die Wahrheit. (You told the truth.)','Sie sagte es laut. (She said it loudly.)','Wir sagten Auf Wiedersehen. (We said goodbye.)','Ihr sagtet zu spaet Bescheid. (You all told too late.)','Sie sagten die Wahrheit. (They told the truth.)'],fu:['Ich werde es sagen. (I will say it.)','Du wirst ja sagen. (You will say yes.)','Er wird es ihr sagen. (He will tell her.)','Wir werden die Wahrheit sagen. (We will tell the truth.)','Ihr werdet es ihm sagen. (You will tell him.)','Sie werden es bekanntmachen. (They will announce it.)']}},
+{g:'Communication',inf:'hoeren',en:'to hear / listen',pr:['hoere','hoerst','hoert','hoeren','hoert','hoeren'],pa:['hoerte','hoertest','hoerte','hoerten','hoertet','hoerten'],fu:['werde hoeren','wirst hoeren','wird hoeren','werden hoeren','werdet hoeren','werden hoeren'],ex:{pr:['Ich hoere Musik. (I listen to music.)','Du hoerst nicht zu. (You are not listening.)','Er hoert die Nachrichten. (He listens to the news.)','Wir hoeren gut zu. (We listen carefully.)','Ihr hoert die gleiche Musik. (You all listen to the same music.)','Sie hoeren auf den Chef. (They listen to the boss.)'],pa:['Ich hoerte ein Geraeusch. (I heard a noise.)','Du hoertest nicht. (You did not listen.)','Sie hoerte Musik. (She listened to music.)','Wir hoerten aufmerksam zu. (We listened attentively.)','Ihr hoertet zu. (You all listened.)','Sie hoerten das Konzert. (They listened to the concert.)'],fu:['Ich werde besser zuhoeren. (I will listen better.)','Du wirst es hoeren. (You will hear it.)','Er wird Podcasts hoeren. (He will listen to podcasts.)','Wir werden mehr hoeren. (We will listen more.)','Ihr werdet die Musik hoeren. (You will hear the music.)','Sie werden dem Rat hoeren. (They will heed the advice.)']}},
+{g:'Cognition',inf:'lernen',en:'to learn',pr:['lerne','lernst','lernt','lernen','lernt','lernen'],pa:['lernte','lerntest','lernte','lernten','lerntet','lernten'],fu:['werde lernen','wirst lernen','wird lernen','werden lernen','werdet lernen','werden lernen'],ex:{pr:['Ich lerne Deutsch. (I am learning German.)','Du lernst schnell. (You learn fast.)','Er lernt fuer die Pruefung. (He is studying for the exam.)','Wir lernen jeden Tag. (We learn every day.)','Ihr lernt zusammen. (You all study together.)','Sie lernen eine neue Sprache. (They are learning a new language.)'],pa:['Ich lernte Gitarre spielen. (I learned to play guitar.)','Du lerntest schnell. (You learned quickly.)','Sie lernte Kochen. (She learned to cook.)','Wir lernten viel. (We learned a lot.)','Ihr lerntet zusammen. (You all studied together.)','Sie lernten Englisch. (They learned English.)'],fu:['Ich werde mehr lernen. (I will learn more.)','Du wirst Programmieren lernen. (You will learn programming.)','Er wird Japanisch lernen. (He will learn Japanese.)','Wir werden zusammen lernen. (We will learn together.)','Ihr werdet es schnell lernen. (You all will learn it quickly.)','Sie werden viel lernen. (They will learn a lot.)']}},
+{g:'Cognition',inf:'verstehen',en:'to understand',pr:['verstehe','verstehst','versteht','verstehen','versteht','verstehen'],pa:['verstand','verstandst','verstand','verstanden','verstandet','verstanden'],fu:['werde verstehen','wirst verstehen','wird verstehen','werden verstehen','werdet verstehen','werden verstehen'],ex:{pr:['Ich verstehe das nicht. (I do not understand that.)','Du verstehst mich. (You understand me.)','Er versteht die Frage. (He understands the question.)','Wir verstehen uns. (We understand each other.)','Ihr versteht den Text. (You all understand the text.)','Sie verstehen die Situation. (They understand the situation.)'],pa:['Ich verstand kein Wort. (I did not understand a word.)','Du verstandst es sofort. (You understood it immediately.)','Sie verstand die Aufgabe. (She understood the task.)','Wir verstanden uns gut. (We understood each other well.)','Ihr verstandet den Witz. (You all understood the joke.)','Sie verstanden den Plan. (They understood the plan.)'],fu:['Ich werde es verstehen. (I will understand it.)','Du wirst mich verstehen. (You will understand me.)','Er wird die Regeln verstehen. (He will understand the rules.)','Wir werden uns verstehen. (We will understand each other.)','Ihr werdet es bald verstehen. (You all will understand soon.)','Sie werden den Unterschied verstehen. (They will understand the difference.)']}},
+{g:'Cognition',inf:'denken',en:'to think',pr:['denke','denkst','denkt','denken','denkt','denken'],pa:['dachte','dachtest','dachte','dachten','dachtet','dachten'],fu:['werde denken','wirst denken','wird denken','werden denken','werdet denken','werden denken'],ex:{pr:['Ich denke nach. (I am thinking.)','Du denkst zu viel. (You think too much.)','Er denkt positiv. (He thinks positively.)','Wir denken an euch. (We are thinking of you all.)','Ihr denkt kreativ. (You all think creatively.)','Sie denken langfristig. (They think long-term.)'],pa:['Ich dachte an sie. (I thought of her.)','Du dachtest es durch. (You thought it through.)','Sie dachte nach. (She thought about it.)','Wir dachten an morgen. (We thought about tomorrow.)','Ihr dachtet an den Plan. (You all thought about the plan.)','Sie dachten an die Zukunft. (They thought about the future.)'],fu:['Ich werde daran denken. (I will think about it.)','Du wirst anders denken. (You will think differently.)','Er wird kreativ denken. (He will think creatively.)','Wir werden positiv denken. (We will think positively.)','Ihr werdet es ueberdenken. (You all will reconsider.)','Sie werden an eine Loesung denken. (They will think of a solution.)']}},
+{g:'Social',inf:'helfen',en:'to help',pr:['helfe','hilfst','hilft','helfen','helft','helfen'],pa:['half','halfst','half','halfen','halft','halfen'],fu:['werde helfen','wirst helfen','wird helfen','werden helfen','werdet helfen','werden helfen'],ex:{pr:['Ich helfe dir gern. (I am happy to help you.)','Du hilfst mir immer. (You always help me.)','Er hilft seiner Mutter. (He helps his mother.)','Wir helfen einander. (We help each other.)','Ihr helft im Buero. (You all help in the office.)','Sie helfen den Kindern. (They help the children.)'],pa:['Ich half ihm beim Umzug. (I helped him move.)','Du halfst mir sehr. (You helped me a lot.)','Sie half einem Fremden. (She helped a stranger.)','Wir halfen zusammen. (We helped together.)','Ihr halft in der Schule. (You all helped at school.)','Sie halfen den Armen. (They helped the poor.)'],fu:['Ich werde dir helfen. (I will help you.)','Du wirst ihm helfen. (You will help him.)','Er wird der Gemeinde helfen. (He will help the community.)','Wir werden euch helfen. (We will help you all.)','Ihr werdet helfen muessen. (You all will have to help.)','Sie werden viel helfen. (They will help a lot.)']}},
+{g:'Social',inf:'sehen',en:'to see',pr:['sehe','siehst','sieht','sehen','seht','sehen'],pa:['sah','sahst','sah','sahen','saht','sahen'],fu:['werde sehen','wirst sehen','wird sehen','werden sehen','werdet sehen','werden sehen'],ex:{pr:['Ich sehe das Problem. (I see the problem.)','Du siehst gut aus. (You look good.)','Er sieht fern. (He is watching TV.)','Wir sehen uns morgen. (We will see each other tomorrow.)','Ihr seht den Fehler. (You all see the mistake.)','Sie sehen die Chance. (They see the opportunity.)'],pa:['Ich sah ihn gestern. (I saw him yesterday.)','Du sahst den Film. (You saw the film.)','Sie sah einen Unfall. (She saw an accident.)','Wir sahen das Konzert. (We saw the concert.)','Ihr saht den Sonnenuntergang. (You all saw the sunset.)','Sie sahen nichts. (They saw nothing.)'],fu:['Ich werde es sehen. (I will see it.)','Du wirst ihn wiedersehen. (You will see him again.)','Er wird den Arzt sehen. (He will see the doctor.)','Wir werden uns bald sehen. (We will see each other soon.)','Ihr werdet den Unterschied sehen. (You will see the difference.)','Sie werden Erfolge sehen. (They will see results.)']}},
+{g:'Social',inf:'geben',en:'to give',pr:['gebe','gibst','gibt','geben','gebt','geben'],pa:['gab','gabst','gab','gaben','gabt','gaben'],fu:['werde geben','wirst geben','wird geben','werden geben','werdet geben','werden geben'],ex:{pr:['Ich gebe dir ein Geschenk. (I give you a gift.)','Du gibst guten Rat. (You give good advice.)','Er gibt Gas. (He steps on the gas.)','Wir geben unser Bestes. (We give our best.)','Ihr gebt nicht auf. (You all do not give up.)','Sie geben alles. (They give everything.)'],pa:['Ich gab ihm das Buch. (I gave him the book.)','Du gabst mir Mut. (You gave me courage.)','Sie gab es zurueck. (She gave it back.)','Wir gaben eine Party. (We threw a party.)','Ihr gabt euere Stimme ab. (You all cast your vote.)','Sie gaben ihr Leben. (They gave their lives.)'],fu:['Ich werde es dir geben. (I will give it to you.)','Du wirst es weiterleiten. (You will pass it on.)','Er wird einen Hinweis geben. (He will give a hint.)','Wir werden unser Bestes geben. (We will give our best.)','Ihr werdet Feedback geben. (You all will give feedback.)','Sie werden Hilfe geben. (They will give help.)']}}
+];
+
+var _done=false;
+var _view='pronouns';
+
+function renderConjPanel(){
+  var ct=document.getElementById('conj-panel-content');
+  if(!ct||_done)return;
+  _done=true;
+
+  // Tab switcher
+  var tabs=document.createElement('div');
+  tabs.className='conj-tabs';
+  var tabDefs=[{id:'pronouns',lbl:'\ud83d\udc64 Pronouns Guide'},{id:'verbs',lbl:'\ud83d\udd00 Verb Tables'}];
+  tabDefs.forEach(function(t){
+    var btn=document.createElement('button');
+    btn.className='conj-tab'+(t.id===_view?' active':'');
+    btn.textContent=t.lbl;
+    btn.dataset.tid=t.id;
+    btn.addEventListener('click',function(){
+      _view=t.id;
+      ct.querySelectorAll('.conj-tab').forEach(function(b){b.classList.toggle('active',b.dataset.tid===t.id);});
+      ct.querySelectorAll('.conj-view').forEach(function(v){v.classList.toggle('active',v.dataset.view===t.id);});
+    });
+    tabs.appendChild(btn);
+  });
+  ct.appendChild(tabs);
+
+  // ── PRONOUNS VIEW ────────────────────────────────────────
+  var pView=document.createElement('div');
+  pView.className='conj-view active';
+  pView.dataset.view='pronouns';
+
+  // Pronoun reference card
+  var introDiv=document.createElement('div');
+  introDiv.className='conj-pronouns-intro';
+  introDiv.innerHTML=
+    '<div class="conj-section-title">German Pronouns - Deutsche Pronomen<\/div>'+
+    '<p style="font-size:.72rem;color:#94a3b8;margin:.3rem 0 .6rem">German has 6 verb slots. er, sie, es all share the same verb form (3rd person singular). Formal Sie conjugates like plural sie.<\/p>'+
+    '<div class="conj-pronoun-grid">'+
+    '<div>'+
+      '<div style="font-family:IBM Plex Mono,monospace;font-size:.57rem;letter-spacing:.08em;text-transform:uppercase;color:#38bdf8;margin-bottom:.35rem">Singular<\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">ich<\/span><span class="conj-pron-en">I &mdash; 1st person<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">du<\/span><span class="conj-pron-en">you &mdash; 2nd informal<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">er<\/span><span class="conj-pron-en">he &mdash; 3rd masc<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">sie<\/span><span class="conj-pron-en">she &mdash; 3rd fem<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">es<\/span><span class="conj-pron-en">it &mdash; 3rd neut<\/span><\/div>'+
+    '<\/div>'+
+    '<div>'+
+      '<div style="font-family:IBM Plex Mono,monospace;font-size:.57rem;letter-spacing:.08em;text-transform:uppercase;color:#38bdf8;margin-bottom:.35rem">Plural<\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">wir<\/span><span class="conj-pron-en">we &mdash; 1st person<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">ihr<\/span><span class="conj-pron-en">you all &mdash; 2nd informal<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">sie<\/span><span class="conj-pron-en">they &mdash; 3rd plural<\/span><\/div>'+
+      '<div class="conj-pron-row"><span class="conj-pron-de">Sie<\/span><span class="conj-pron-en">you (formal) &mdash; singular & plural<\/span><\/div>'+
+    '<\/div><\/div>'+
+    '<p style="font-size:.64rem;color:#6b7280;margin-top:.45rem">\u26a1 Tip: er, sie, es always take the same verb form. Just learn one form for all three.<\/p>';
+  pView.appendChild(introDiv);
+
+  // Pattern table with sein
+  var patDiv=document.createElement('div');
+  var sein=VB[0];
+  var patHTML='<div class="conj-section-title">How Pronouns Change the Verb<\/div>'+
+    '<p style="font-size:.7rem;color:#94a3b8;margin:.3rem 0 .6rem">Using <em style="color:#7eb8f7;font-style:normal">sein<\/em> (to be) as the master pattern across all three tenses:<\/p>'+
+    '<table class="conj-tbl"><thead><tr><th>Slot<\/th><th>Pronoun<\/th><th style="color:#f0c060">Present<\/th><th>Past<\/th><th>Future<\/th><th>English<\/th><\/tr><\/thead><tbody>';
+  var slotNames=['S1','S2','S3','P1','P2','P3'];
+  var slotLong=['1st sing','2nd sing','3rd sing','1st plur','2nd plur','3rd plur'];
+  for(var i=0;i<6;i++){
+    patHTML+='<tr>'+
+      '<td class="conj-pron-col">'+slotLong[i]+'<\/td>'+
+      '<td style="font-family:IBM Plex Mono,monospace;font-size:.61rem;color:#7eb8f7">'+PRON6[i]+'<\/td>'+
+      '<td class="hi">'+sein.pr[i]+'<\/td>'+
+      '<td>'+sein.pa[i]+'<\/td>'+
+      '<td style="font-size:.62rem">'+sein.fu[i]+'<\/td>'+
+      '<td style="color:#6b7280;font-size:.62rem">'+PRON6_EN[i]+'<\/td>'+
+      '<\/tr>';
+  }
+  patHTML+='<\/tbody><\/table>';
+  patDiv.innerHTML=patHTML;
+  pView.appendChild(patDiv);
+
+  // Per-pronoun practical cards
+  var pronTitle=document.createElement('div');
+  pronTitle.className='conj-section-title';
+  pronTitle.textContent='Practical Applications Per Pronoun';
+  pView.appendChild(pronTitle);
+  var pronNote=document.createElement('p');
+  pronNote.style.cssText='font-size:.7rem;color:#94a3b8;margin:.3rem 0 .8rem';
+  pronNote.textContent='Each pronoun shown with haben, koennen, gehen and machen across Present, Past and Future:';
+  pView.appendChild(pronNote);
+
+  var exVerbIdx=[1,3,6,8]; // haben, koennen, wollen, gehen
+  for(var pi=0;pi<6;pi++){
+    var pCard=document.createElement('div');
+    pCard.style.cssText='margin-bottom:1rem;background:rgba(255,255,255,.025);border-radius:8px;padding:.65rem .8rem;border:1px solid rgba(126,184,247,.1)';
+    var pH='<div style="font-family:IBM Plex Mono,monospace;font-size:.72rem;color:#7eb8f7;margin-bottom:.4rem">'+
+      PRON6[pi]+' <span style="color:#6b7280;font-size:.65rem">\u2014 '+PRON6_EN[pi]+'<\/span><\/div>';
+    var pT='<table class="conj-tbl"><thead><tr><th>Verb<\/th><th style="color:#f0c060">Present<\/th><th>Past<\/th><th>Future<\/th><th>Example (Present)<\/th><\/tr><\/thead><tbody>';
+    for(var vi=0;vi<exVerbIdx.length;vi++){
+      var ev=VB[exVerbIdx[vi]];
+      pT+='<tr>'+
+        '<td style="color:#7eb8f7;font-size:.62rem">'+ev.inf+'<\/td>'+
+        '<td class="hi">'+ev.pr[pi]+'<\/td>'+
+        '<td>'+ev.pa[pi]+'<\/td>'+
+        '<td style="font-size:.61rem">'+ev.fu[pi]+'<\/td>'+
+        '<td class="conj-example">'+ev.ex.pr[pi]+'<\/td>'+
+        '<\/tr>';
+    }
+    pT+='<\/tbody><\/table>';
+    pCard.innerHTML=pH+pT;
+    pView.appendChild(pCard);
+  }
+  ct.appendChild(pView);
+
+  // ── VERBS VIEW ───────────────────────────────────────────
+  var vView=document.createElement('div');
+  vView.className='conj-view';
+  vView.dataset.view='verbs';
+
+  var srch=document.createElement('input');
+  srch.className='conj-search';
+  srch.placeholder='Search verb (e.g. gehen, to eat)...';
+  srch.addEventListener('input',function(){
+    var q=this.value.toLowerCase();
+    vView.querySelectorAll('.conj-verb-card').forEach(function(c){
+      c.style.display=(!q||c.dataset.inf.includes(q)||c.dataset.en.includes(q))?'':'none';
+    });
+    vView.querySelectorAll('.conj-grp-lbl').forEach(function(l){
+      var n=l.nextSibling,ok=false;
+      while(n&&(!n.classList||!n.classList.contains('conj-grp-lbl'))){
+        if(n.nodeType===1&&n.style.display!=='none')ok=true;n=n.nextSibling;
+      }
+      l.style.display=ok?'':'none';
+    });
+  });
+  vView.appendChild(srch);
+
+  var cg='';
+  VB.forEach(function(v){
+    if(v.g!==cg){
+      cg=v.g;
+      var gl=document.createElement('div');gl.className='conj-grp-lbl';gl.textContent=cg;
+      vView.appendChild(gl);
+    }
+    var card=document.createElement('div');
+    card.className='conj-verb-card';
+    card.dataset.inf=v.inf;card.dataset.en=v.en;
+
+    var hdr='<div class="conj-verb-header"><span class="conj-verb-inf">'+v.inf+'<\/span><span class="conj-verb-en">'+v.en+'<\/span><\/div>';
+    var tbls='';
+    TENSES.forEach(function(t){
+      tbls+='<div class="conj-tense-block">'+
+        '<div class="conj-tense-lbl">'+t.label+' - '+t.sub+'<\/div>'+
+        '<table class="conj-tbl"><thead><tr><th>Slot<\/th><th>Pronoun<\/th><th>Form<\/th><th>Practical Example<\/th><\/tr><\/thead><tbody>';
+      for(var i=0;i<6;i++){
+        tbls+='<tr>'+
+          '<td class="conj-pron-col">'+slotLong[i]+'<\/td>'+
+          '<td style="font-family:IBM Plex Mono,monospace;font-size:.6rem;color:#7eb8f7">'+PRON6[i]+'<\/td>'+
+          '<td class="hi">'+v[t.key][i]+'<\/td>'+
+          '<td class="conj-example">'+v.ex[t.key][i]+'<\/td>'+
+          '<\/tr>';
+      }
+      tbls+='<\/tbody><\/table><\/div>';
+    });
+    card.innerHTML=hdr+tbls;
+    vView.appendChild(card);
+  });
+  ct.appendChild(vView);
+}
+window.renderConjPanel=renderConjPanel;
+})();
+
 <\/script>
 </body>
 </html>
@@ -8379,11 +8749,607 @@ window.addEventListener('DOMContentLoaded',()=>{
 <\/script>
 </body>
 </html>
-`
+`,
+  g4: `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Pronomen & Konjugation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--surf:#161b27;--card:#1d2235;--border:rgba(126,184,247,.18);--blue:#7eb8f7;--cyan:#38bdf8;--gold:#f0c060;--muted:#6b7280;--text:#e2e8f0;--green:#4ade80;--red:#f87171}
+body{background:var(--bg);color:var(--text);font-family:Inter,sans-serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif}
+/* LAYOUT */
+.shell{display:flex;flex-direction:column;height:100vh}
+.top-bar{background:var(--surf);border-bottom:1px solid var(--border);padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.top-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--blue)}
+.top-sub{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.06em}
+.score-box{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--gold);background:rgba(240,192,96,.08);border:1px solid rgba(240,192,96,.2);border-radius:6px;padding:.25rem .55rem}
+/* SECTION TABS */
+.sec-tabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
+.sec-tab{font-family:'IBM Plex Mono',monospace;font-size:.62rem;padding:.6rem .9rem;color:var(--muted);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
+.sec-tab.on{color:var(--blue);border-bottom-color:var(--blue);background:rgba(126,184,247,.06)}
+/* SCROLL AREA */
+.content{flex:1;overflow-y:auto;padding:1rem}
+/* PRONOUN REFERENCE */
+.pron-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.2rem}
+.pron-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.8rem}
+.pron-card-title{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;color:var(--cyan);margin-bottom:.55rem}
+.pron-row{display:flex;align-items:baseline;gap:.5rem;margin-bottom:.3rem}
+.pron-de{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--blue);min-width:2.8rem}
+.pron-en{font-size:.68rem;color:var(--muted)}
+.pron-tag{font-size:.58rem;color:var(--cyan);font-style:italic}
+.tip-box{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);border-radius:8px;padding:.65rem .8rem;font-size:.7rem;color:#94a3b8;line-height:1.55;margin-bottom:1rem}
+.tip-box strong{color:var(--cyan)}
+/* PATTERN TABLE */
+.section-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--blue);margin:1.2rem 0 .5rem;border-bottom:1px solid var(--border);padding-bottom:.35rem}
+.pattern-tbl{width:100%;border-collapse:collapse;font-size:.7rem;margin-bottom:1rem}
+.pattern-tbl th{font-family:'IBM Plex Mono',monospace;font-size:.57rem;color:var(--muted);padding:4px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}
+.pattern-tbl td{padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.04)}
+.pattern-tbl tr:hover td{background:rgba(255,255,255,.02)}
+.td-pron{font-family:'IBM Plex Mono',monospace;color:var(--blue);font-size:.68rem}
+.td-form{color:var(--gold);font-weight:500}
+.td-ex{color:#94a3b8;font-size:.65rem}
+.td-slot{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted)}
+.tense-head{font-family:'IBM Plex Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);background:rgba(56,189,248,.05);padding:5px 6px;border-left:2px solid var(--cyan)}
+/* VERB CARDS */
+.verb-search{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:.4rem .7rem;color:var(--text);font-size:.82rem;margin-bottom:.8rem;outline:none}
+.verb-search:focus{border-color:var(--blue)}
+.group-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin:1rem 0 .4rem;border-bottom:1px solid rgba(56,189,248,.14);padding-bottom:.2rem}
+.verb-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.75rem .85rem;margin-bottom:.75rem}
+.verb-inf{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--blue)}
+.verb-en{font-size:.68rem;color:var(--muted);font-style:italic;margin-bottom:.5rem}
+.tense-block{margin-bottom:.6rem}
+.tense-label{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;color:var(--cyan);border-bottom:1px solid rgba(56,189,248,.12);padding-bottom:.15rem;margin-bottom:.25rem}
+.conj-tbl{width:100%;border-collapse:collapse;font-size:.68rem}
+.conj-tbl th{font-family:'IBM Plex Mono',monospace;font-size:.54rem;color:var(--muted);padding:2px 4px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+.conj-tbl td{padding:3px 4px;line-height:1.5}
+.conj-tbl td.cp{font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted)}
+.conj-tbl td.cf{color:var(--gold)}
+.conj-tbl td.ce{font-size:.63rem;color:#94a3b8}
+.conj-tbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+/* QUIZ */
+.quiz-area{max-width:480px;margin:0 auto}
+.quiz-progress{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:.8rem;text-align:center}
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.2rem 1rem;margin-bottom:.9rem}
+.quiz-type{font-family:'IBM Plex Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);margin-bottom:.5rem}
+.quiz-q{font-size:.95rem;line-height:1.5;margin-bottom:.8rem}
+.quiz-q em{color:var(--gold);font-style:normal;font-weight:600}
+.quiz-choices{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.6rem}
+.choice-btn{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:.5rem .6rem;font-size:.78rem;color:var(--text);cursor:pointer;text-align:left;transition:all .15s;font-family:Inter,sans-serif}
+.choice-btn:hover{background:rgba(126,184,247,.08);border-color:var(--blue)}
+.choice-btn.correct{background:rgba(74,222,128,.12);border-color:var(--green);color:var(--green)}
+.choice-btn.wrong{background:rgba(248,113,113,.1);border-color:var(--red);color:var(--red)}
+.choice-btn.reveal{background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.3)}
+.quiz-feedback{font-size:.78rem;min-height:1.4rem;margin-bottom:.5rem;line-height:1.4}
+.quiz-feedback.ok{color:var(--green)}
+.quiz-feedback.bad{color:var(--red)}
+.next-btn{width:100%;background:rgba(126,184,247,.12);border:1px solid rgba(126,184,247,.3);border-radius:8px;padding:.55rem;font-size:.82rem;color:var(--blue);cursor:pointer;font-family:Inter,sans-serif;display:none}
+.next-btn:hover{background:rgba(126,184,247,.2)}
+.quiz-done{text-align:center;padding:2rem 1rem}
+.quiz-done h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:.5rem}
+.quiz-done p{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem}
+.restart-btn{background:rgba(240,192,96,.12);border:1px solid rgba(240,192,96,.3);border-radius:8px;padding:.55rem 1.2rem;font-size:.82rem;color:var(--gold);cursor:pointer;font-family:Inter,sans-serif}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div>
+      <div class="top-title">Pronomen &amp; Konjugation</div>
+      <div class="top-sub">1ST &rarr; 3RD PERSON &middot; SINGULAR &amp; PLURAL &middot; 3 TENSES</div>
+    </div>
+    <div class="score-box" id="score-box">0 / 0</div>
+  </div>
+  <div class="sec-tabs">
+    <button class="sec-tab on" onclick="showSec('pronouns',this)">&#x1F464; Pronouns</button>
+    <button class="sec-tab" onclick="showSec('pattern',this)">&#x1F4CA; Patterns</button>
+    <button class="sec-tab" onclick="showSec('verbs',this)">&#x1F4D6; Verb Tables</button>
+    <button class="sec-tab" onclick="showSec('quiz',this)">&#x1F9E0; Quiz</button>
+  </div>
+  <div class="content">
+
+    <!-- SECTION: PRONOUNS -->
+    <div id="sec-pronouns">
+      <div class="pron-grid">
+        <div class="pron-card">
+          <div class="pron-card-title">Singular</div>
+          <div class="pron-row"><span class="pron-de">ich</span><span class="pron-en">I</span><span class="pron-tag">1st</span></div>
+          <div class="pron-row"><span class="pron-de">du</span><span class="pron-en">you (informal)</span><span class="pron-tag">2nd</span></div>
+          <div class="pron-row"><span class="pron-de">er</span><span class="pron-en">he</span><span class="pron-tag">3rd m</span></div>
+          <div class="pron-row"><span class="pron-de">sie</span><span class="pron-en">she</span><span class="pron-tag">3rd f</span></div>
+          <div class="pron-row"><span class="pron-de">es</span><span class="pron-en">it</span><span class="pron-tag">3rd n</span></div>
+        </div>
+        <div class="pron-card">
+          <div class="pron-card-title">Plural</div>
+          <div class="pron-row"><span class="pron-de">wir</span><span class="pron-en">we</span><span class="pron-tag">1st</span></div>
+          <div class="pron-row"><span class="pron-de">ihr</span><span class="pron-en">you all</span><span class="pron-tag">2nd</span></div>
+          <div class="pron-row"><span class="pron-de">sie</span><span class="pron-en">they</span><span class="pron-tag">3rd</span></div>
+          <div class="pron-row"><span class="pron-de">Sie</span><span class="pron-en">you (formal)</span><span class="pron-tag">formal</span></div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <strong>Key rule:</strong> er, sie, es all use the <strong>same verb form</strong> &mdash; that is the 3rd person singular slot. Formal <strong>Sie</strong> conjugates like plural <strong>sie</strong> (they). German has 6 conjugation slots total.
+      </div>
+      <div class="tip-box">
+        <strong>du vs Sie:</strong> Use <strong>du</strong> with friends, family, children. Use <strong>Sie</strong> (capital S) with strangers, professionals, elders. A learner mistake here is socially noticeable!
+      </div>
+      <div class="tip-box">
+        <strong>3 tenses covered:</strong> <strong>Praesens</strong> (present &mdash; what is happening now), <strong>Praeteritum</strong> (simple past &mdash; what happened, used in writing &amp; narrative), <strong>Futur I</strong> (future &mdash; werden + infinitive).
+      </div>
+    </div>
+
+    <!-- SECTION: PATTERNS -->
+    <div id="sec-pattern" class="hide">
+      <div class="section-title">Verb Ending Patterns</div>
+      <div class="tip-box"><strong>Regular verbs</strong> follow a fixed pattern. Irregular verbs change their stem. Study the slots &mdash; the endings are the same shape even when the stem changes.</div>
+      <div id="pattern-tables"></div>
+    </div>
+
+    <!-- SECTION: VERBS -->
+    <div id="sec-verbs" class="hide">
+      <input class="verb-search" id="verb-search" placeholder="Search verb (e.g. gehen, to eat)..." oninput="filterVerbs()">
+      <div id="verb-list"></div>
+    </div>
+
+    <!-- SECTION: QUIZ -->
+    <div id="sec-quiz" class="hide">
+      <div class="quiz-area">
+        <div id="quiz-active">
+          <div class="quiz-progress" id="quiz-progress">Question 1 of 20</div>
+          <div class="quiz-card">
+            <div class="quiz-type" id="quiz-type"></div>
+            <div class="quiz-q" id="quiz-q"></div>
+            <div class="quiz-choices" id="quiz-choices"></div>
+            <div class="quiz-feedback" id="quiz-feedback"></div>
+            <button class="next-btn" id="next-btn" onclick="nextQ()">Next &rarr;</button>
+          </div>
+        </div>
+        <div id="quiz-done" class="quiz-done hide">
+          <h2 id="done-score"></h2>
+          <p id="done-msg"></p>
+          <button class="restart-btn" onclick="startQuiz()">Try Again</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+var PRON = ['ich','du','er/sie/es','wir','ihr','sie/Sie'];
+var PRON_EN = ['I','you (inf)','he/she/it','we','you all','they'];
+var SLOT = ['1st sing','2nd sing','3rd sing','1st plur','2nd plur','3rd plur'];
+
+var VB = [
+{g:'Auxiliary',inf:'sein',en:'to be',
+ pr:['bin','bist','ist','sind','seid','sind'],
+ pa:['war','warst','war','waren','wart','waren'],
+ fu:['werde sein','wirst sein','wird sein','werden sein','werdet sein','werden sein'],
+ ex:{pr:['Ich bin muede.','Du bist nett.','Er ist gross.','Wir sind hier.','Ihr seid spaet.','Sie sind Lehrer.'],
+     pa:['Ich war zu Hause.','Du warst krank.','Er war muede.','Wir waren zusammen.','Ihr wart laut.','Sie waren gluecklich.'],
+     fu:['Ich werde bereit sein.','Du wirst stark sein.','Es wird spaet sein.','Wir werden da sein.','Ihr werdet puenktlich sein.','Sie werden erfolgreich sein.']}},
+{g:'Auxiliary',inf:'haben',en:'to have',
+ pr:['habe','hast','hat','haben','habt','haben'],
+ pa:['hatte','hattest','hatte','hatten','hattet','hatten'],
+ fu:['werde haben','wirst haben','wird haben','werden haben','werdet haben','werden haben'],
+ ex:{pr:['Ich habe Hunger.','Du hast Zeit.','Er hat ein Auto.','Wir haben Glueck.','Ihr habt Recht.','Sie haben Kinder.'],
+     pa:['Ich hatte Angst.','Du hattest eine Idee.','Sie hatte Fieber.','Wir hatten Spass.','Ihr hattet Erfolg.','Sie hatten keine Zeit.'],
+     fu:['Ich werde mehr Geld haben.','Du wirst Erfolg haben.','Er wird keine Wahl haben.','Wir werden genug haben.','Ihr werdet Spass haben.','Sie werden alles haben.']}},
+{g:'Auxiliary',inf:'werden',en:'to become',
+ pr:['werde','wirst','wird','werden','werdet','werden'],
+ pa:['wurde','wurdest','wurde','wurden','wurdet','wurden'],
+ fu:['werde werden','wirst werden','wird werden','werden werden','werdet werden','werden werden'],
+ ex:{pr:['Ich werde Arzt.','Du wirst muede.','Es wird kalt.','Wir werden aelter.','Ihr werdet besser.','Sie werden bekannt.'],
+     pa:['Ich wurde nervoes.','Du wurdest staerker.','Er wurde krank.','Wir wurden Freunde.','Ihr wurdet leise.','Sie wurden Meister.'],
+     fu:['Ich werde Ingenieur werden.','Du wirst besser werden.','Es wird waermer werden.','Wir werden staerker werden.','Ihr werdet erfahrener werden.','Sie werden Profis werden.']}},
+{g:'Modal',inf:'koennen',en:'can / be able to',
+ pr:['kann','kannst','kann','koennen','koennt','koennen'],
+ pa:['konnte','konntest','konnte','konnten','konntet','konnten'],
+ fu:['werde koennen','wirst koennen','wird koennen','werden koennen','werdet koennen','werden koennen'],
+ ex:{pr:['Ich kann schwimmen.','Du kannst gut kochen.','Er kann Klavier spielen.','Wir koennen helfen.','Ihr koennt kommen.','Sie koennen Deutsch.'],
+     pa:['Ich konnte nicht schlafen.','Du konntest es sehen.','Sie konnte nicht kommen.','Wir konnten gewinnen.','Ihr konntet lachen.','Sie konnten es schaffen.'],
+     fu:['Ich werde es koennen.','Du wirst besser koennen.','Er wird fahren koennen.','Wir werden gewinnen koennen.','Ihr werdet es koennen.','Sie werden helfen koennen.']}},
+{g:'Modal',inf:'muessen',en:'must / have to',
+ pr:['muss','musst','muss','muessen','muesst','muessen'],
+ pa:['musste','musstest','musste','mussten','musstet','mussten'],
+ fu:['werde muessen','wirst muessen','wird muessen','werden muessen','werdet muessen','werden muessen'],
+ ex:{pr:['Ich muss arbeiten.','Du musst lernen.','Er muss puenktlich sein.','Wir muessen gehen.','Ihr muesst aufraeumen.','Sie muessen warten.'],
+     pa:['Ich musste frueh aufstehen.','Du musstest bleiben.','Sie musste weinen.','Wir mussten kaempfen.','Ihr musstet leise sein.','Sie mussten fliehen.'],
+     fu:['Ich werde mehr ueben muessen.','Du wirst entscheiden muessen.','Er wird zahlen muessen.','Wir werden umziehen muessen.','Ihr werdet warten muessen.','Sie werden kaempfen muessen.']}},
+{g:'Modal',inf:'wollen',en:'to want to',
+ pr:['will','willst','will','wollen','wollt','wollen'],
+ pa:['wollte','wolltest','wollte','wollten','wolltet','wollten'],
+ fu:['werde wollen','wirst wollen','wird wollen','werden wollen','werdet wollen','werden wollen'],
+ ex:{pr:['Ich will Kaffee.','Du willst schlafen.','Er will gewinnen.','Wir wollen reisen.','Ihr wollt spielen.','Sie wollen helfen.'],
+     pa:['Ich wollte nicht luegen.','Du wolltest bleiben.','Sie wollte tanzen.','Wir wollten Pizza essen.','Ihr wolltet gewinnen.','Sie wollten Frieden.'],
+     fu:['Ich werde reisen wollen.','Du wirst mehr wollen.','Er wird siegen wollen.','Wir werden feiern wollen.','Ihr werdet es wollen.','Sie werden aendern wollen.']}},
+{g:'Modal',inf:'duerfen',en:'may / allowed to',
+ pr:['darf','darfst','darf','duerfen','duerft','duerfen'],
+ pa:['durfte','durftest','durfte','durften','durftet','durften'],
+ fu:['werde duerfen','wirst duerfen','wird duerfen','werden duerfen','werdet duerfen','werden duerfen'],
+ ex:{pr:['Ich darf das nicht.','Du darfst rein.','Er darf mitkommen.','Wir duerfen fragen.','Ihr duerft gehen.','Sie duerfen waehlen.'],
+     pa:['Ich durfte nicht rausgehen.','Du durftest spaet bleiben.','Sie durfte singen.','Wir durften mitspielen.','Ihr durftet waehlen.','Sie durften eintreten.'],
+     fu:['Ich werde es duerfen.','Du wirst fahren duerfen.','Er wird waehlen duerfen.','Wir werden abstimmen duerfen.','Ihr werdet teilnehmen duerfen.','Sie werden entscheiden duerfen.']}},
+{g:'Movement',inf:'gehen',en:'to go / walk',
+ pr:['gehe','gehst','geht','gehen','geht','gehen'],
+ pa:['ging','gingst','ging','gingen','gingt','gingen'],
+ fu:['werde gehen','wirst gehen','wird gehen','werden gehen','werdet gehen','werden gehen'],
+ ex:{pr:['Ich gehe zur Schule.','Du gehst nach Hause.','Er geht joggen.','Wir gehen spazieren.','Ihr geht einkaufen.','Sie gehen ins Kino.'],
+     pa:['Ich ging ins Buero.','Du gingst zu spaet.','Sie ging nach Hause.','Wir gingen zusammen.','Ihr gingt durch den Park.','Sie gingen tanzen.'],
+     fu:['Ich werde morgen gehen.','Du wirst allein gehen.','Er wird zur Party gehen.','Wir werden zusammen gehen.','Ihr werdet frueh gehen.','Sie werden ins Ausland gehen.']}},
+{g:'Movement',inf:'kommen',en:'to come',
+ pr:['komme','kommst','kommt','kommen','kommt','kommen'],
+ pa:['kam','kamst','kam','kamen','kamt','kamen'],
+ fu:['werde kommen','wirst kommen','wird kommen','werden kommen','werdet kommen','werden kommen'],
+ ex:{pr:['Ich komme gleich.','Du kommst zu spaet.','Er kommt aus Berlin.','Wir kommen heute Abend.','Ihr kommt zur Party.','Sie kommen morgen.'],
+     pa:['Ich kam gestern an.','Du kamst ueberraschend.','Sie kam aus Paris.','Wir kamen zu Besuch.','Ihr kamt zu spaet.','Sie kamen nicht.'],
+     fu:['Ich werde kommen.','Du wirst rechtzeitig kommen.','Er wird heute kommen.','Wir werden zusammen kommen.','Ihr werdet auch kommen.','Sie werden nicht kommen.']}},
+{g:'Movement',inf:'fahren',en:'to drive / travel',
+ pr:['fahre','faehrst','faehrt','fahren','fahrt','fahren'],
+ pa:['fuhr','fuhrst','fuhr','fuhren','fuhrt','fuhren'],
+ fu:['werde fahren','wirst fahren','wird fahren','werden fahren','werdet fahren','werden fahren'],
+ ex:{pr:['Ich fahre zur Arbeit.','Du faehrst zu schnell.','Er faehrt nach Muenchen.','Wir fahren in Urlaub.','Ihr fahrt mit dem Zug.','Sie fahren mit dem Auto.'],
+     pa:['Ich fuhr zur Schule.','Du fuhrst zu schnell.','Sie fuhr allein.','Wir fuhren ans Meer.','Ihr fuhrt durch die Stadt.','Sie fuhren in die Berge.'],
+     fu:['Ich werde morgen fahren.','Du wirst nach Berlin fahren.','Er wird das Auto fahren.','Wir werden ans Meer fahren.','Ihr werdet mit dem Zug fahren.','Sie werden in die Stadt fahren.']}},
+{g:'Daily Life',inf:'machen',en:'to do / make',
+ pr:['mache','machst','macht','machen','macht','machen'],
+ pa:['machte','machtest','machte','machten','machtet','machten'],
+ fu:['werde machen','wirst machen','wird machen','werden machen','werdet machen','werden machen'],
+ ex:{pr:['Ich mache Hausaufgaben.','Du machst gute Arbeit.','Er macht das Fenster auf.','Wir machen eine Pause.','Ihr macht Musik.','Sie machen Urlaub.'],
+     pa:['Ich machte einen Fehler.','Du machtest einen Vorschlag.','Sie machte die Tuer zu.','Wir machten eine Reise.','Ihr machtet Fotos.','Sie machten gute Arbeit.'],
+     fu:['Ich werde es besser machen.','Du wirst deinen Job machen.','Er wird einen Plan machen.','Wir werden eine Party machen.','Ihr werdet Sport machen.','Sie werden Fortschritte machen.']}},
+{g:'Daily Life',inf:'essen',en:'to eat',
+ pr:['esse','isst','isst','essen','esst','essen'],
+ pa:['ass','assest','ass','assen','asst','assen'],
+ fu:['werde essen','wirst essen','wird essen','werden essen','werdet essen','werden essen'],
+ ex:{pr:['Ich esse Brot.','Du isst zu wenig.','Er isst gern Pizza.','Wir essen zusammen.','Ihr esst im Restaurant.','Sie essen vegetarisch.'],
+     pa:['Ich ass zu viel.','Du assest nichts.','Sie ass Kuchen.','Wir assen draussen.','Ihr asst Pizza.','Sie assen gut.'],
+     fu:['Ich werde Salat essen.','Du wirst mehr Fruechte essen.','Er wird im Cafe essen.','Wir werden zusammen essen.','Ihr werdet gesund essen.','Sie werden draussen essen.']}},
+{g:'Daily Life',inf:'schlafen',en:'to sleep',
+ pr:['schlafe','schlaefst','schlaeft','schlafen','schlaft','schlafen'],
+ pa:['schlief','schliefst','schlief','schliefen','schlieft','schliefen'],
+ fu:['werde schlafen','wirst schlafen','wird schlafen','werden schlafen','werdet schlafen','werden schlafen'],
+ ex:{pr:['Ich schlafe acht Stunden.','Du schlaefst schlecht.','Das Baby schlaeft.','Wir schlafen frueh.','Ihr schlaft zu lange.','Sie schlafen tief.'],
+     pa:['Ich schlief sofort ein.','Du schliefst durch.','Er schlief lang.','Wir schliefen draussen.','Ihr schlieft im Zelt.','Sie schliefen gut.'],
+     fu:['Ich werde frueh schlafen.','Du wirst besser schlafen.','Er wird lang schlafen.','Wir werden gut schlafen.','Ihr werdet genug schlafen.','Sie werden besser schlafen.']}},
+{g:'Daily Life',inf:'arbeiten',en:'to work',
+ pr:['arbeite','arbeitest','arbeitet','arbeiten','arbeitet','arbeiten'],
+ pa:['arbeitete','arbeitetest','arbeitete','arbeiteten','arbeitetet','arbeiteten'],
+ fu:['werde arbeiten','wirst arbeiten','wird arbeiten','werden arbeiten','werdet arbeiten','werden arbeiten'],
+ ex:{pr:['Ich arbeite von zu Hause.','Du arbeitest zu viel.','Er arbeitet in Berlin.','Wir arbeiten als Team.','Ihr arbeitet gut zusammen.','Sie arbeiten an einem Projekt.'],
+     pa:['Ich arbeitete die ganze Nacht.','Du arbeitetest hart.','Sie arbeitete in Muenchen.','Wir arbeiteten zusammen.','Ihr arbeitetet perfekt.','Sie arbeiteten fleissig.'],
+     fu:['Ich werde mehr arbeiten.','Du wirst im Ausland arbeiten.','Er wird von zuhause arbeiten.','Wir werden zusammen arbeiten.','Ihr werdet hart arbeiten.','Sie werden Ueberstunden arbeiten.']}},
+{g:'Communication',inf:'sprechen',en:'to speak',
+ pr:['spreche','sprichst','spricht','sprechen','sprecht','sprechen'],
+ pa:['sprach','sprachst','sprach','sprachen','spracht','sprachen'],
+ fu:['werde sprechen','wirst sprechen','wird sprechen','werden sprechen','werdet sprechen','werden sprechen'],
+ ex:{pr:['Ich spreche Deutsch.','Du sprichst zu leise.','Er spricht drei Sprachen.','Wir sprechen offen.','Ihr sprecht zu schnell.','Sie sprechen fliessend.'],
+     pa:['Ich sprach mit dem Chef.','Du sprachst sehr laut.','Sie sprach auf der Buehne.','Wir sprachen lange.','Ihr spracht ueber alles.','Sie sprachen auf Englisch.'],
+     fu:['Ich werde Spanisch sprechen.','Du wirst vor der Klasse sprechen.','Er wird oeffentlich sprechen.','Wir werden offen sprechen.','Ihr werdet fliessend sprechen.','Sie werden auf der Konferenz sprechen.']}},
+{g:'Communication',inf:'sagen',en:'to say / tell',
+ pr:['sage','sagst','sagt','sagen','sagt','sagen'],
+ pa:['sagte','sagtest','sagte','sagten','sagtet','sagten'],
+ fu:['werde sagen','wirst sagen','wird sagen','werden sagen','werdet sagen','werden sagen'],
+ ex:{pr:['Ich sage die Wahrheit.','Du sagst immer ja.','Er sagt nichts.','Wir sagen Danke.','Ihr sagt Bescheid.','Sie sagen Hallo.'],
+     pa:['Ich sagte nichts.','Du sagtest die Wahrheit.','Sie sagte es laut.','Wir sagten Auf Wiedersehen.','Ihr sagtet zu spaet Bescheid.','Sie sagten die Wahrheit.'],
+     fu:['Ich werde es sagen.','Du wirst ja sagen.','Er wird es ihr sagen.','Wir werden die Wahrheit sagen.','Ihr werdet es ihm sagen.','Sie werden es bekanntmachen.']}},
+{g:'Cognition',inf:'lernen',en:'to learn',
+ pr:['lerne','lernst','lernt','lernen','lernt','lernen'],
+ pa:['lernte','lerntest','lernte','lernten','lerntet','lernten'],
+ fu:['werde lernen','wirst lernen','wird lernen','werden lernen','werdet lernen','werden lernen'],
+ ex:{pr:['Ich lerne Deutsch.','Du lernst schnell.','Er lernt fuer die Pruefung.','Wir lernen jeden Tag.','Ihr lernt zusammen.','Sie lernen eine neue Sprache.'],
+     pa:['Ich lernte Gitarre spielen.','Du lerntest schnell.','Sie lernte Kochen.','Wir lernten viel.','Ihr lerntet zusammen.','Sie lernten Englisch.'],
+     fu:['Ich werde mehr lernen.','Du wirst Programmieren lernen.','Er wird Japanisch lernen.','Wir werden zusammen lernen.','Ihr werdet es schnell lernen.','Sie werden viel lernen.']}},
+{g:'Cognition',inf:'verstehen',en:'to understand',
+ pr:['verstehe','verstehst','versteht','verstehen','versteht','verstehen'],
+ pa:['verstand','verstandst','verstand','verstanden','verstandet','verstanden'],
+ fu:['werde verstehen','wirst verstehen','wird verstehen','werden verstehen','werdet verstehen','werden verstehen'],
+ ex:{pr:['Ich verstehe das nicht.','Du verstehst mich.','Er versteht die Frage.','Wir verstehen uns.','Ihr versteht den Text.','Sie verstehen die Situation.'],
+     pa:['Ich verstand kein Wort.','Du verstandst es sofort.','Sie verstand die Aufgabe.','Wir verstanden uns gut.','Ihr verstandet den Witz.','Sie verstanden den Plan.'],
+     fu:['Ich werde es verstehen.','Du wirst mich verstehen.','Er wird die Regeln verstehen.','Wir werden uns verstehen.','Ihr werdet es bald verstehen.','Sie werden den Unterschied verstehen.']}},
+{g:'Cognition',inf:'denken',en:'to think',
+ pr:['denke','denkst','denkt','denken','denkt','denken'],
+ pa:['dachte','dachtest','dachte','dachten','dachtet','dachten'],
+ fu:['werde denken','wirst denken','wird denken','werden denken','werdet denken','werden denken'],
+ ex:{pr:['Ich denke nach.','Du denkst zu viel.','Er denkt positiv.','Wir denken an euch.','Ihr denkt kreativ.','Sie denken langfristig.'],
+     pa:['Ich dachte an sie.','Du dachtest es durch.','Sie dachte nach.','Wir dachten an morgen.','Ihr dachtet an den Plan.','Sie dachten an die Zukunft.'],
+     fu:['Ich werde daran denken.','Du wirst anders denken.','Er wird kreativ denken.','Wir werden positiv denken.','Ihr werdet es ueberdenken.','Sie werden an eine Loesung denken.']}},
+{g:'Social',inf:'helfen',en:'to help',
+ pr:['helfe','hilfst','hilft','helfen','helft','helfen'],
+ pa:['half','halfst','half','halfen','halft','halfen'],
+ fu:['werde helfen','wirst helfen','wird helfen','werden helfen','werdet helfen','werden helfen'],
+ ex:{pr:['Ich helfe dir gern.','Du hilfst mir immer.','Er hilft seiner Mutter.','Wir helfen einander.','Ihr helft im Buero.','Sie helfen den Kindern.'],
+     pa:['Ich half ihm beim Umzug.','Du halfst mir sehr.','Sie half einem Fremden.','Wir halfen zusammen.','Ihr halft in der Schule.','Sie halfen den Armen.'],
+     fu:['Ich werde dir helfen.','Du wirst ihm helfen.','Er wird der Gemeinde helfen.','Wir werden euch helfen.','Ihr werdet helfen muessen.','Sie werden viel helfen.']}},
+{g:'Social',inf:'sehen',en:'to see',
+ pr:['sehe','siehst','sieht','sehen','seht','sehen'],
+ pa:['sah','sahst','sah','sahen','saht','sahen'],
+ fu:['werde sehen','wirst sehen','wird sehen','werden sehen','werdet sehen','werden sehen'],
+ ex:{pr:['Ich sehe das Problem.','Du siehst gut aus.','Er sieht fern.','Wir sehen uns morgen.','Ihr seht den Fehler.','Sie sehen die Chance.'],
+     pa:['Ich sah ihn gestern.','Du sahst den Film.','Sie sah einen Unfall.','Wir sahen das Konzert.','Ihr saht den Sonnenuntergang.','Sie sahen nichts.'],
+     fu:['Ich werde es sehen.','Du wirst ihn wiedersehen.','Er wird den Arzt sehen.','Wir werden uns bald sehen.','Ihr werdet den Unterschied sehen.','Sie werden Erfolge sehen.']}},
+{g:'Social',inf:'geben',en:'to give',
+ pr:['gebe','gibst','gibt','geben','gebt','geben'],
+ pa:['gab','gabst','gab','gaben','gabt','gaben'],
+ fu:['werde geben','wirst geben','wird geben','werden geben','werdet geben','werden geben'],
+ ex:{pr:['Ich gebe dir ein Geschenk.','Du gibst guten Rat.','Er gibt Gas.','Wir geben unser Bestes.','Ihr gebt nicht auf.','Sie geben alles.'],
+     pa:['Ich gab ihm das Buch.','Du gabst mir Mut.','Sie gab es zurueck.','Wir gaben eine Party.','Ihr gabt euere Stimme ab.','Sie gaben ihr Leben.'],
+     fu:['Ich werde es dir geben.','Du wirst es weiterleiten.','Er wird einen Hinweis geben.','Wir werden unser Bestes geben.','Ihr werdet Feedback geben.','Sie werden Hilfe geben.']}}
+];
+
+var TENSES = [
+  {key:'pr', label:'Present · Praesens', sub:'what is happening now'},
+  {key:'pa', label:'Past · Praeteritum', sub:'what happened'},
+  {key:'fu', label:'Future · Futur I', sub:'what will happen'}
+];
+
+// ── STATE ──────────────────────────────────────────────────
+var score = 0, total = 0;
+var curSec = 'pronouns';
+var quizQ = [], qi = 0, answered = false;
+
+// ── SECTIONS ───────────────────────────────────────────────
+function showSec(id, el) {
+  document.querySelectorAll('[id^="sec-"]').forEach(function(el){ el.classList.add('hide'); });
+  document.getElementById('sec-' + id).classList.remove('hide');
+  document.querySelectorAll('.sec-tab').forEach(function(b){ b.classList.remove('on'); });
+  if (el) el.classList.add('on');
+  curSec = id;
+  if (id === 'pattern' && !document.getElementById('pattern-tables').innerHTML) buildPatterns();
+  if (id === 'verbs' && !document.getElementById('verb-list').innerHTML) buildVerbs();
+  if (id === 'quiz' && quizQ.length === 0) startQuiz();
+}
+
+// ── PATTERN TABLES ─────────────────────────────────────────
+function buildPatterns() {
+  var ct = document.getElementById('pattern-tables');
+  // Pattern table for sein across all tenses (master reference)
+  var sein = VB[0];
+  var html = '<div class="section-title">Master Pattern: sein (to be)</div>';
+  TENSES.forEach(function(t) {
+    html += '<div class="tense-head">' + t.label + ' — ' + t.sub + '</div>';
+    html += '<table class="pattern-tbl"><thead><tr><th>Slot</th><th>Pronoun</th><th>Form</th><th>Example</th></tr></thead><tbody>';
+    for (var i = 0; i < 6; i++) {
+      html += '<tr><td class="td-slot">' + SLOT[i] + '</td>' +
+              '<td class="td-pron">' + PRON[i] + '</td>' +
+              '<td class="td-form">' + sein[t.key][i] + '</td>' +
+              '<td class="td-ex">' + sein.ex[t.key][i] + '</td></tr>';
+    }
+    html += '</tbody></table>';
+  });
+  // Per-pronoun summary table across key verbs
+  html += '<div class="section-title" style="margin-top:1.4rem">Per-Pronoun View: Present Tense</div>';
+  html += '<div class="tip-box">See how each pronoun forces a different form across common verbs:</div>';
+  var keyVerbs = [VB[0], VB[1], VB[3], VB[7], VB[10]]; // sein, haben, koennen, gehen, machen
+  html += '<table class="pattern-tbl"><thead><tr><th>Slot</th><th>Pronoun</th>';
+  keyVerbs.forEach(function(v){ html += '<th>' + v.inf + '</th>'; });
+  html += '</tr></thead><tbody>';
+  for (var i = 0; i < 6; i++) {
+    html += '<tr><td class="td-slot">' + SLOT[i] + '</td><td class="td-pron">' + PRON[i] + '</td>';
+    keyVerbs.forEach(function(v){ html += '<td class="td-form">' + v.pr[i] + '</td>'; });
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  ct.innerHTML = html;
+}
+
+// ── VERB TABLES ────────────────────────────────────────────
+function buildVerbs() {
+  var ct = document.getElementById('verb-list');
+  var html = '';
+  var cg = '';
+  VB.forEach(function(v) {
+    if (v.g !== cg) {
+      cg = v.g;
+      html += '<div class="group-label">' + cg + '</div>';
+    }
+    html += '<div class="verb-card" data-inf="' + v.inf + '" data-en="' + v.en + '">';
+    html += '<div class="verb-inf">' + v.inf + '</div>';
+    html += '<div class="verb-en">' + v.en + '</div>';
+    TENSES.forEach(function(t) {
+      html += '<div class="tense-block"><div class="tense-label">' + t.label + ' — ' + t.sub + '</div>';
+      html += '<table class="conj-tbl"><thead><tr><th>Slot</th><th>Pronoun</th><th>Form</th><th>Example</th></tr></thead><tbody>';
+      for (var i = 0; i < 6; i++) {
+        html += '<tr><td class="cp">' + SLOT[i] + '</td><td class="cp" style="color:#7eb8f7">' + PRON[i] + '</td>' +
+                '<td class="cf">' + v[t.key][i] + '</td>' +
+                '<td class="ce">' + v.ex[t.key][i] + '</td></tr>';
+      }
+      html += '</tbody></table></div>';
+    });
+    html += '</div>';
+  });
+  ct.innerHTML = html;
+}
+
+function filterVerbs() {
+  var q = document.getElementById('verb-search').value.toLowerCase();
+  document.querySelectorAll('.verb-card').forEach(function(c) {
+    c.style.display = (!q || c.dataset.inf.includes(q) || c.dataset.en.includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('.group-label').forEach(function(l) {
+    var n = l.nextSibling, ok = false;
+    while (n && (!n.classList || !n.classList.contains('group-label'))) {
+      if (n.nodeType === 1 && n.style.display !== 'none') ok = true;
+      n = n.nextSibling;
+    }
+    l.style.display = ok ? '' : 'none';
+  });
+}
+
+// ── QUIZ ENGINE ────────────────────────────────────────────
+function buildQuizPool() {
+  var pool = [];
+  // Q type 1: given pronoun + verb, pick correct conjugated form (tense chosen randomly)
+  VB.forEach(function(v) {
+    TENSES.forEach(function(t) {
+      for (var i = 0; i < 6; i++) {
+        pool.push({
+          type: 'Pick the form',
+          q: 'Choose the correct form of <em>' + v.inf + '</em> for <em>' + PRON[i] + '</em> in the <em>' + t.label.split('·')[0].trim() + '</em>:',
+          answer: v[t.key][i],
+          distractors: getDistractors(v, t.key, i),
+          explain: PRON[i] + ' → ' + v[t.key][i] + ' — e.g. ' + v.ex[t.key][i]
+        });
+      }
+    });
+  });
+  // Q type 2: given a conjugated form + verb, identify the pronoun
+  VB.slice(0, 8).forEach(function(v) {
+    TENSES.forEach(function(t) {
+      for (var i = 0; i < 6; i++) {
+        var form = v[t.key][i];
+        // Only ask if this form is unique to one slot in this tense
+        var slots = [];
+        for (var j = 0; j < 6; j++) { if (v[t.key][j] === form) slots.push(j); }
+        if (slots.length === 1) {
+          pool.push({
+            type: 'Identify the pronoun',
+            q: 'Which pronoun matches <em>' + form + '</em> (from <em>' + v.inf + '</em>, ' + t.label.split('·')[0].trim() + ')?',
+            answer: PRON[i],
+            distractors: getPronDistractors(i),
+            explain: form + ' → ' + PRON[i] + ' (' + SLOT[i] + ')'
+          });
+        }
+      }
+    });
+  });
+  // Q type 3: translate the example sentence — fill in the verb
+  VB.slice(0, 10).forEach(function(v) {
+    TENSES.forEach(function(t) {
+      for (var i = 0; i < 6; i++) {
+        var ex = v.ex[t.key][i];
+        pool.push({
+          type: 'Complete the sentence',
+          q: 'Fill in the blank: <em>' + ex.replace(v[t.key][i], '____') + '</em>',
+          answer: v[t.key][i],
+          distractors: getDistractors(v, t.key, i),
+          explain: PRON[i] + ' + ' + v.inf + ' → ' + v[t.key][i]
+        });
+      }
+    });
+  });
+  return pool;
+}
+
+function getDistractors(v, tKey, correctIdx) {
+  var correct = v[tKey][correctIdx];
+  var others = [];
+  for (var i = 0; i < 6; i++) {
+    if (v[tKey][i] !== correct && others.indexOf(v[tKey][i]) < 0) others.push(v[tKey][i]);
+  }
+  // Also pull from other tenses
+  TENSES.forEach(function(t) {
+    if (t.key !== tKey) {
+      for (var i = 0; i < 6; i++) {
+        if (v[t.key][i] !== correct && others.indexOf(v[t.key][i]) < 0) others.push(v[t.key][i]);
+      }
+    }
+  });
+  shuffle(others);
+  return others.slice(0, 3);
+}
+
+function getPronDistractors(correctIdx) {
+  var all = PRON.slice();
+  all.splice(correctIdx, 1);
+  shuffle(all);
+  return all.slice(0, 3);
+}
+
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+}
+
+function startQuiz() {
+  var pool = buildQuizPool();
+  shuffle(pool);
+  quizQ = pool.slice(0, 20);
+  qi = 0; score = 0; total = 0; answered = false;
+  document.getElementById('quiz-done').classList.add('hide');
+  document.getElementById('quiz-active').classList.remove('hide');
+  updateScoreBox();
+  showQ();
+}
+
+function showQ() {
+  if (qi >= quizQ.length) { showDone(); return; }
+  answered = false;
+  var q = quizQ[qi];
+  document.getElementById('quiz-progress').textContent = 'Question ' + (qi+1) + ' of ' + quizQ.length;
+  document.getElementById('quiz-type').textContent = q.type;
+  document.getElementById('quiz-q').innerHTML = q.q;
+  document.getElementById('quiz-feedback').textContent = '';
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  document.getElementById('next-btn').style.display = 'none';
+
+  var choices = [q.answer].concat(q.distractors);
+  shuffle(choices);
+  var ct = document.getElementById('quiz-choices');
+  ct.innerHTML = '';
+  choices.forEach(function(c) {
+    var btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.onclick = function() { checkAnswer(c, q, btn); };
+    ct.appendChild(btn);
+  });
+}
+
+function checkAnswer(chosen, q, btn) {
+  if (answered) return;
+  answered = true; total++;
+  var correct = chosen === q.answer;
+  if (correct) score++;
+  updateScoreBox();
+  document.querySelectorAll('.choice-btn').forEach(function(b) {
+    if (b.textContent === q.answer) b.classList.add(correct ? 'correct' : 'reveal');
+  });
+  if (!correct) btn.classList.add('wrong');
+  var fb = document.getElementById('quiz-feedback');
+  fb.textContent = (correct ? '✓ Correct! ' : '✕ Wrong. ') + q.explain;
+  fb.className = 'quiz-feedback ' + (correct ? 'ok' : 'bad');
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQ() { qi++; showQ(); }
+
+function showDone() {
+  document.getElementById('quiz-active').classList.add('hide');
+  var done = document.getElementById('quiz-done');
+  done.classList.remove('hide');
+  var pct = Math.round(score / quizQ.length * 100);
+  document.getElementById('done-score').textContent = score + ' / ' + quizQ.length + ' · ' + pct + '%';
+  var msg = pct >= 90 ? 'Ausgezeichnet! You have mastered pronoun conjugation.' :
+            pct >= 70 ? 'Gut gemacht! Keep practising the tricky verbs.' :
+            pct >= 50 ? 'Not bad! Review the pattern tables and try again.' :
+                        'Keep going! Study the verb tables then retry.';
+  document.getElementById('done-msg').textContent = msg;
+}
+
+function updateScoreBox() {
+  document.getElementById('score-box').textContent = score + ' / ' + total;
+}
+
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  // nothing needed — lazy-built on tab click
+});
+<\/script>
+</body>
+</html>`
 };
 
 let loadedCount = 0;
-const total = 3;
+const total = 4;
 
 function loadFrame(id) {
   const frame = document.getElementById('frame-' + id);
@@ -8471,12 +9437,10 @@ window.addEventListener('DOMContentLoaded', () => {
   loadFrame('g1');
   setTimeout(() => loadFrame('g2'), 60);
   setTimeout(() => loadFrame('g3'), 120);
+  setTimeout(() => loadFrame('g4'), 180);
 });
 </script>
 
-<!-- BMAC -->
-<style>.bmac-wrap{position:fixed;bottom:80px;right:18px;z-index:8000;display:flex;flex-direction:column;align-items:center;gap:5px;}.bmac-wrap a{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFDD00,#FFB800);color:#111;font-weight:700;font-size:14px;font-family:sans-serif;padding:10px 16px;border-radius:50px;text-decoration:none;white-space:nowrap;box-shadow:0 4px 18px rgba(255,200,0,0.5);}.bmac-sub{font-family:monospace;font-size:9px;color:rgba(255,220,80,0.6);}</style>
-<div class="bmac-wrap"><a href="https://buymeacoffee.com/Mteeslanguages" target="_blank" rel="noopener">☕ Buy me a coffee</a><span class="bmac-sub">Support this app</span></div>
 <!-- PAYWALL -->
 <style>.pw-overlay{display:none;position:fixed;inset:0;background:rgba(5,10,22,0.94);backdrop-filter:blur(14px);z-index:99000;align-items:center;justify-content:center;}.pw-overlay.show{display:flex;}.pw-box{background:#0f1423;border:1px solid rgba(245,200,66,0.3);border-radius:20px;padding:34px 26px;max-width:330px;width:92%;text-align:center;}.pw-icon{font-size:44px;margin-bottom:10px;}.pw-title{font-family:serif;font-size:26px;font-weight:700;color:#f5c842;margin-bottom:8px;}.pw-desc{font-family:monospace;font-size:11px;color:#8a8070;line-height:1.7;margin-bottom:16px;}.pw-price{font-family:serif;font-size:44px;font-weight:700;color:#fff;margin-bottom:16px;}.pw-feats{list-style:none;margin:0 0 20px;padding:0;text-align:left;}.pw-feats li{font-family:monospace;font-size:11px;color:#c0b898;padding:5px 0;border-bottom:1px solid rgba(245,200,66,0.07);}.pw-paybtn{display:block;width:100%;background:linear-gradient(135deg,#f5c842,#e0a820);color:#000;font-family:monospace;font-size:12px;font-weight:700;text-transform:uppercase;padding:14px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;margin-bottom:10px;}.pw-close{background:none;border:1px solid rgba(245,200,66,0.2);color:#8a8070;font-family:monospace;font-size:10px;padding:8px 20px;border-radius:20px;cursor:pointer;}.pw-paid{font-family:monospace;font-size:9px;color:rgba(245,200,66,0.4);margin-top:12px;}.pw-paid button{background:none;border:none;color:rgba(245,200,66,0.5);font-family:monospace;font-size:9px;cursor:pointer;text-decoration:underline;display:block;margin:5px auto 0;}</style>
 <div class="pw-overlay" id="pw-overlay"><div class="pw-box"><div class="pw-icon">🔒</div><div class="pw-title">Premium Levels</div><div class="pw-desc">Unlock B1 to C2 — intermediate to mastery</div><div class="pw-price">$7.00</div><ul class="pw-feats"><li>✦ B1 — Intermediate</li><li>✦ B2 — Advanced fluency</li><li>✦ C1 — Professional mastery</li><li>✦ C2 — Native-level precision</li><li>✦ Lifetime access</li></ul><a class="pw-paybtn" href="https://www.paypal.me/MichaelAsante438/7" target="_blank" rel="noopener">💳 Unlock with PayPal — $7.00</a><button class="pw-close" onclick="document.getElementById('pw-overlay').classList.remove('show')">Maybe later</button><div class="pw-paid">Already paid? <button onclick="pwUnlock()">✓ I've paid — unlock now</button></div></div></div>
